@@ -1,0 +1,51 @@
+Country;iso3c;income;SEZno;FPno;FirstYear;CIATrate2018;KPMGrate2018;additional_rate;additional_rate_source;SEZrate;maximum_time;alternative_rate;SEZrate_source;Note;No_of_diff_regimes
+Antigua and Barbuda;ATG;High income;2;NA;01.01.1994;NA;25;;;0;Permanent;;http://zone.gov.ag/investments/;"""Exempted from the payment of taxes of any kind on the repatriation of profits earned in the Free Trade and Processing Zone.""";1
+Argentina;ARG;High income;14;0;01.01.1994;41.5;30;;;41.5;Permanent;;http://www.afip.gob.ar/zonasFrancas/#ver;"""Será aplicable la totalidad de las disposiciones de carácter impositivo, aduanero y financiero, incluidas las de carácter penal que rigen en el territorio aduanero general, salvo las excepciones establecidas en el artículo 590 del Código Aduanero""";1
+Aruba;ABW;High income;2;NA;NA;NA;25;;;2;Permanent;;IBFD Country Tax Guide 2019;;1
+Barbados;BRB;High income;0;NA;NA;NA;30;;;NA;NA;;;;NA
+Bolivia;BOL;Lower middle income;7;0;01.01.1990;25;25;;;25;Permanent;;IBFD Country Tax Guide;;1
+Brazil;BRA;Upper middle income;32;0;01.01.1957;34;34;;;25.5;Permanent;34;http://www.suframa.gov.br/invest/en-porque-investir-tax.cfm;INCOME TAX (IR) - 75% reduction in Income Tax and Non-Reimbursable Extras, exclusively for reinvestments. Common to all the Legal Amazon.;2
+Bahamas, The;BHS;High income;6;NA;01.01.1955;NA;0;;;0;NA;;;;1
+Belize;BLZ;Upper middle income;4;NA;01.01.1990;NA;NA;0.75;IBFD Country Tax Guide 2019;0;10;2;IBFD Country Tax Guide 2019;after 10 years, a rate of 2% is applicable. For general tax regime, there is no uniform rate. Different rates are applicable to different activities, ranging from 0.75 up to 25%.;1
+Chile;CHL;High income;4;0;01.01.1975;25;26;;;0;Permanent;;https://www.cetuchile.cl/index.php?option=com_content&view=article&id=1887:b-zona-franca-de-extension&catid=174:reporte-tributario-no68-enero-2016&Itemid=264;"Exemption from the ""Impuesto de la renta de primera categoria"", which is the corporate income tax";1
+Colombia;COL;Upper middle income;39;72;01.01.1958;37;33;;;20;Permanent;15/0;IBFD Country Tax Guide;From 1 January 2017, companies qualified as industrial FTZ users are subject to a 20% income tax rate, except for users in an FTZ created in the city of Cúcuta where a 15% rate applies. […] Law 1955 of 2019 included a special tax regime for companies located in Special Economic and Social Zones (ZESE), in the departments of La Guajira, Norte de Santander and Arauca, and the cities of Armenia and Quibdó. This regime was created to attract local and foreign investments in order to improve the quality of life of their inhabitants and create jobs. In this respect, companies newly incorporated in the ZESE, or existing companies located therein, which are able to demonstrate a 15% increase in new direct jobs, may apply a 0% income tax rate during the first 5 years, and 50% of the general income tax rate during the following 5 years. Decree 2112 of 2019 regulates this benefit.;3
+Costa Rica;CRI;Upper middle income;49;82;01.01.1990;30;30;;;0;12;;https://www.cinde.org/en/incentives;After 12 years, 50% exemption for another 6 years. Shorter periods (8 and 4 years) in metropolitan area;2
+Cuba;CUB;Upper middle income;1;0;01.01.1996;NA;NA;35;http://www.parlamentocubano.gob.cu/index.php/documento/ley-del-sistema-tributario/;0;10;12;https://www.icex.es/icex/es/Navegacion-zona-contacto/revista-el-exportador/mundo/REP2016606296.html;After 10 years, a rate of 12% is applicable;1
+Curacao;CUW;High income;2;0;NA;NA;22;;;2;Permanent;;IBFD Country Tax Guide;;1
+Dominica;DMA;Upper middle income;NA;NA;NA;NA;25;;;NA;NA;;;;NA
+Dominican Republic;DOM;Upper middle income;73;144;01.01.1968;27;27;;;0;Permanent;;http://web.archive.org/web/20200221122652/http://cnzfe.gob.do/index.php/es/preguntas-frecuentes;;1
+Ecuador;ECU;Upper middle income;12;0;01.01.1991;28;25;;;20;Permanent;0;IBFD Country Tax Guide;"a reduced income tax rate of 20% (since 2018) […] The Law to promote the Production, Attraction of Investment, Generation of Employment and Stability and Fiscal Balance of 21 August 2018 also implemented the following income tax exemptions for new investments:
+
+    made in prioritized sectors outside Quito or Guayaquil (12 years);
+
+    made in Quito or Guayaquil (8 years);
+
+    made in border regions of the country (15 years); and
+
+    in basic industries in border regions of the country (20 years).";5
+Grenada;GRD;Upper middle income;0;NA;01.01.1974;NA;30;;;NA;NA;;;;NA
+Guatemala;GTM;Upper middle income;18;NA;01.01.1976;25;25;;;0;10;;IBFD Country Tax Guide;;1
+Guyana;GUY;Upper middle income;0;NA;NA;NA;NA;40;IBFD Country Tax Guide;NA;NA;;;;NA
+Honduras;HND;Lower middle income;39;0;01.01.1976;30;25;;;0;Permanent;;IBFD Country Tax Guide;Free zone: Profits derived by companies established in the free zone from activities performed therein are exempt from income tax. […] Export Processing Zone: exemption from income tax for 20 years and from municipal taxes for 10 years. ;2
+Haiti;HTI;Low income;13;0;01.01.1976;NA;NA;30;https://import-export.societegenerale.fr/fr/fiche-pays/haiti/presentation-fiscalite;0;15;;Original law, http://www.ilo.org/dyn/natlex/natlex4.detail?p_lang=en&p_isn=63923 ;After 15 years, progressive increase over a period of 6 years until 100% tax liability;1
+Jamaica;JAM;Upper middle income;17;38;01.01.1976;NA;25;;;7.5;Permanent;;IBFD Country Tax Guide;Entities operating in an SEZ have a low corporate income tax rate of 12.5%, which can be reduced to 7.5% with the use of ETC that can reduce the company’s tax liability up to 30% and Promotional Tax Credits that can reduce the company’s tax liability up to 10%. Previously there was a 0% regime.;1
+St. Kitts and Nevis;KNA;High income;NA;NA;NA;NA;33;;;NA;NA;;;;NA
+Cayman Islands;CYM;High income;6;0;01.01.2011;NA;0;;;0;NA;;;;NA
+St. Lucia;LCA;Upper middle income;1;2;01.01.1983;NA;30;;;0;5;;IBFD Country Tax Guide;After 5 years, progressive rates up to 8% apply;1
+St. Martin (French part);MAF;High income;NA;NA;NA;NA;NA;20;http://www.com-saint-martin.fr/Fiscalite-Saint-Martin-Antilles.html;NA;NA;;;;NA
+Mexico;MEX;Upper middle income;17;NA;01.01.1965;30;30;;;0;10;;;ZEE (zonas economicas especiales) companies have a 100% tax reduction for the first 10 years, and a 50% reduction for the 5 following years.;1
+Nicaragua;NIC;Lower middle income;52;0;01.01.1976;30;30;;;0;20;;IBFD Country Tax Guide;10 year tax holiday, renewable for another 10 years. Afterwards 60% reduction;1
+Panama;PAN;High income;15;0;01.01.1948;25;25;;;0;Permanent;;IBFD Country Tax Guide;Different regimes are applicable to different zones, with varying level of benefit, but most include a full tax exemption;4
+Peru;PER;Upper middle income;4;0;01.01.1989;29.5;29.5;;;0;NA;;IBFD Country Tax Guide;Different regimes are applicable to different zones, with varying level of benefit, but generally include a full tax exemption;2
+Puerto Rico;PRI;High income;NA;NA;NA;NA;NA;37.5;PWC Tax summaries;NA;NA;;;General tax rate is progressive ranging from aroud 23.5% to 37.5%;NA
+Paraguay;PRY;Upper middle income;2;108;01.01.1995;10;10;;;Other tax incentive (gross);;;IBFD Country Tax Guide;possibility to elect 0.5% turnover tax instead of income tax;1
+Suriname;SUR;Upper middle income;NA;NA;NA;NA;36;;;NA;NA;;;;NA
+El Salvador;SLV;Lower middle income;17;0;01.01.1990;30;30;;;0;Permanent;;IBFD Country Tax Guide;;1
+Sint Maarten (Dutch part);SXM;High income;NA;NA;NA;NA;35;;;NA;NA;;;;NA
+Turks and Caicos Islands;TCA;High income;NA;NA;NA;NA;0;;;NA;NA;;;;NA
+Trinidad and Tobago;TTO;High income;1;17;01.01.1988;NA;25;;;0;Permanent;;IBFD Country Tax Guide;;1
+Uruguay;URY;High income;23;0;01.01.1923;25;25;;;0;Permanent;;https://www.mef.gub.uy/1064/4/areas/beneficios-tributarios-para-zonas-francas.html;;1
+St. Vincent and the Grenadines;VCT;Upper middle income;0;NA;NA;NA;33;;;NA;NA;;;;
+Venezuela, RB;VEN;Upper middle income;14;0;01.01.1991;34;34;;;0;10;;IBFD Country Tax Guide;;1
+British Virgin Islands;VGB;High income;NA;NA;NA;NA;NA;0;Deloitte International Tax;NA;NA;;;;NA
+Virgin Islands (U.S.);VIR;High income;NA;NA;NA;NA;NA;38.5;Deloitte International Tax;NA;NA;;;Progressive rates from 15% to up to 35% apply. In addition, a surtax applies depending on total tax liability;NA

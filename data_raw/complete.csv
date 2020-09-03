@@ -1,0 +1,43 @@
+"";"Country";"Harmful_COCG";"Harmful_OECD_FHTP";"Regimeassessed";"Harmfulregimesfound"
+"1";"Brazil";"NULL";"NULL";"Yes";"No"
+"2";"Dominican Republic";"NULL";"NULL";"Yes";"No"
+"3";"Grenada";"NULL";"NULL";"Yes";"No"
+"4";"Jamaica";"NULL";"NULL";"Yes";"No"
+"5";"Peru";"NULL";"NULL";"Yes";"No"
+"6";"Paraguay";"NULL";"NULL";"Yes";"No"
+"7";"Antigua and Barbuda";"Free Trade Zones (Paradise Found Act, Yida Act, Free Trade Zone Act, Special Economic Zone Act)";"NULL";"Yes";"Yes"
+"8";"Aruba";"c(""Free zones"", ""Special zone San Nicolas"")";"Free zone";"Yes";"Yes"
+"9";"Belize";"Export processing zones (EPZ) enterprises";"NULL";"Yes";"Yes"
+"10";"Costa Rica";"Manufacturing activities under the amended Free Zones regime";"c(""Free Zones"", ""Free trade zone"")";"Yes";"Yes"
+"11";"Curacao";"Manufacturing activities under the eZone regime";"eZone";"Yes";"Yes"
+"12";"St. Lucia";"Free trade Zones";"NULL";"Yes";"Yes"
+"13";"Panama";"Foreign Owned Call Centres";"c(""Panama-Pacifico Special Economic Area"", ""City of knowledge technical zone"", ""Panama-Pacifico special economic zone"")";"Yes";"Yes"
+"14";"Trinidad and Tobago";"NULL";"c(""Free trade zone"", ""Free trade zones"")";"Yes";"Yes"
+"15";"Uruguay";"NULL";"c(""Free zones"", ""Free zones"", ""Free zones"")";"Yes";"Yes"
+"16";"Argentina";"NULL";"NULL";"No";NA
+"17";"Barbados";"NULL";"NULL";"No";NA
+"18";"Bolivia";"NULL";"NULL";"No";NA
+"19";"Bahamas, The";"NULL";"NULL";"No";NA
+"20";"Chile";"NULL";"NULL";"No";NA
+"21";"Colombia";"NULL";"NULL";"No";NA
+"22";"Cuba";"NULL";"NULL";"No";NA
+"23";"Dominica";"NULL";"NULL";"No";NA
+"24";"Ecuador";"NULL";"NULL";"No";NA
+"25";"Guatemala";"NULL";"NULL";"No";NA
+"26";"Guyana";"NULL";"NULL";"No";NA
+"27";"Honduras";"NULL";"NULL";"No";NA
+"28";"Haiti";"NULL";"NULL";"No";NA
+"29";"St. Kitts and Nevis";"NULL";"NULL";"No";NA
+"30";"Cayman Islands";"NULL";"NULL";"No";NA
+"31";"St. Martin (French part)";"NULL";"NULL";"No";NA
+"32";"Mexico";"NULL";"NULL";"No";NA
+"33";"Nicaragua";"NULL";"NULL";"No";NA
+"34";"Puerto Rico";"NULL";"NULL";"No";NA
+"35";"Suriname";"NULL";"NULL";"No";NA
+"36";"El Salvador";"NULL";"NULL";"No";NA
+"37";"Sint Maarten (Dutch part)";"NULL";"NULL";"No";NA
+"38";"Turks and Caicos Islands";"NULL";"NULL";"No";NA
+"39";"St. Vincent and the Grenadines";"NULL";"NULL";"No";NA
+"40";"Venezuela, RB";"NULL";"NULL";"No";NA
+"41";"British Virgin Islands";"NULL";"NULL";"No";NA
+"42";"Virgin Islands (U.S.)";"NULL";"NULL";"No";NA
