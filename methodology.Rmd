@@ -37,9 +37,9 @@ The analysis proceeds in 5 steps:
 In a first step, the geographical scope of the analysis is determined. Since the article deals principally with the Latin American region, all countries and jurisdiction belonging to the region "Latin America & Caribbean" in the World Bank classification are included. Countries and their regional classification are obtained from: http://databank.worldbank.org/data/download/site-content/CLASS.xls, Accessed on 20 July 2020.
 ```{r countries included}
 
-wb <- read_excel("data_raw/CLASS.xls", skip=4)
-wb %<>%  rename(country = Economy, iso3c=Code, region=Region)
-lac_countries <- wb %>% filter(region=="Latin America & Caribbean") %>% select(country,iso3c)
+lac_countries <- read_excel("data_raw/CLASS.xls", skip=4)
+lac_countries %<>%  rename(country = Economy, iso3c=Code, region=Region)
+lac_countries %>% filter(region=="Latin America & Caribbean") %>% select(country,iso3c)
 
 ```
 The sample includes 
