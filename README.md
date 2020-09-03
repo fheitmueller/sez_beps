@@ -1,10 +1,4 @@
-# Template repository
+# Special Economic Zones, BEPS Action 5 and EU Code of Conduct
 
-Student can use this repository got start a new repo on GitHub
+This repository contains methodology, data and code used to produce the paper "SEZs Facing the Challenges of International Taxation: BEPS Action 5, EU Code of Conduct, and the Future".
 
-- `R/init.R` is a helper script that set's git user name and email.
-
-be sure to edit the script to change the following variables to your name and email
-
-- `user_name`
-- `user_email`
