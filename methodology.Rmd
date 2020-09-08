@@ -51,16 +51,16 @@ In a next step, data on the prevalence of SEZs is added from the UNCTAD World In
 It is unclear from the dataset whether cells containing ".." are zero values or missing values (in the sense that no information could be obtained). However, since some cells contain zero values, ".." will be treated as missing.
 ```{r UNCTAD SEZ data, results=FALSE}
 
-UNCTAD <- read_csv2("data_raw/WIR19_tab21.csv",skip=2, col_names=TRUE)
-UNCTAD  %<>%  rename(Country = Economya) 
-UNCTAD %<>% drop_na(Country)
-UNCTAD[178,1]<-"Jamaica"
-UNCTAD[207,1]<-"Turkmenistan"
-UNCTAD[104,1]<-"Bhutan"
+unctad <- read_csv2("data_raw/WIR19_tab21.csv",skip=2, col_names=TRUE)
+unctad  %<>%  rename(country = Economya) 
+unctad %<>% drop_na(country)
+unctad[178,1]<-"Jamaica"
+unctad[207,1]<-"Turkmenistan"
+unctad[104,1]<-"Bhutan"
 
-df <- as.data.frame(UNCTAD) ##code does not work with tibbles yet
-source("C:/Users/Frederik/surfdrive/RScripts/custom match to countrycode.R", encoding="UTF-8")
-UNCTAD <- df
+unctad <- countrycustommatch::countrymatch_w_list(df=UNCTAD, columnname="country")
+
+
 
 LAC <- left_join(LAC,UNCTAD[c("iso3c", "Number of SEZs (established by law)","Number of single-enterprise zones (\"free points\")","Year of the first promulgation of lawc")], by="iso3c")
 LAC  %<>%  rename(SEZno = "Number of SEZs (established by law)", FPno ="Number of single-enterprise zones (\"free points\")", FirstYear= "Year of the first promulgation of lawc") 
@@ -95,13 +95,13 @@ These are distributed across
 LAC %>% filter(SEZno > 0) %>% nrow() %>% print
 
 ```
+countries.
 
 
 
+The next step consists in adding data that is relevant to assess the kind of tax-benefit available. Data on the "normal" tax regime in the rest of the country is downloaded from CIAT. CIAT provides time series data on "general" tax rates and and "maximum" tax rates. Since "general" excludes surcharges which are generally payable, the "maximum" rates are used. The difference of the SEZ regime from the rest of the country should therefore be regarded as the maximum benefit. Data was downloaded from <https://ciatorg.sharepoint.com/sites/cds/_layouts/15/guestaccess.aspx?docid=0b55688f22c7f4f3c9af47402923b8128&authkey=AflZ26auh2fOQoTW5EHzhfI&e=356a6a32ce38454f94eba7398c54cfca> on 16 June 2020. 
 
-The next step consists in adding data that is relevant to assess the kind of tax-benefit available. Data on the "normal" tax regime in the rest of the country is downloaded from CIAT. CIAT provides time series data on "general" tax rates and and "maximum" tax rates. Since "general" excludes surcharges which are generally payable, the "maximum" rates are used. The difference of the SEZ regime from the rest of the country should therefore be regarded as the maximum benefit. Data was downloaded from https://ciatorg.sharepoint.com/sites/cds/_layouts/15/guestaccess.aspx?docid=0b55688f22c7f4f3c9af47402923b8128&authkey=AflZ26auh2fOQoTW5EHzhfI&e=356a6a32ce38454f94eba7398c54cfca on 16 June 2020. 
-
-For jurisdictions where CIAT data was not available, data from KPMG was used. It was downloaded from https://home.kpmg/xx/en/home/services/tax/tax-tools-and-resources/tax-rates-online/corporate-tax-rates-table.html on 22 June 2020.
+For jurisdictions where CIAT data was not available, data from KPMG was used. It was downloaded from <https://home.kpmg/xx/en/home/services/tax/tax-tools-and-resources/tax-rates-online/corporate-tax-rates-table.html> on 22 June 2020.
 Finally, tax rates for jurisdictions available in neither database were searched on the IBFD Tax Summaries database.
 
 ```{r combine with tax data, echo=FALSE}
@@ -201,7 +201,6 @@ car <- pl(dat=filter(world, subregion=="Caribbean"))+ theme(legend.position = "n
 fulltest <- pl(dat=world)
 leg <- get_legend(fulltest)
 
-
 ggarrange(latam, ggarrange(car, leg, ncol=1, nrow=2), ncol=2, nrow=1)
 
 
@@ -223,12 +222,10 @@ harmfulregimes <- left_join(harmfulregimes, wb[c("iso3c", "region")], by="iso3c"
 zonesassessed <- filter(harmfulregimes, grepl(paste(c("zone", "centre", "city", "area", "Labuan"), collapse="|"), Regime_name, ignore.case=TRUE))
 
 ##manual removal of regimes falsely identified as SEZ
-zonesassessed <- zonesassessed[-c(12:13, 16, 22:26, 28, 32, 33, 41, 44, 68, 71,72),] ## https://thailand.ahk.de/en/members/member-news/news-details/overview-of-the-international-business-centre-regime 
+zonesassessed <- zonesassessed[-c(12:13, 16, 22:26, 28, 32, 33, 41, 44, 68, 71,72),] ## <https://thailand.ahk.de/en/members/member-news/news-details/overview-of-the-international-business-centre-regime> 
 ##https://lawphil.net/statutes/repacts/ra1999/ra_8756_1999.html
 ## https://georgiawealth.info/en/the-face-of-virtual-zone-in-georgia/
 ##https://juslaws.com/international-trade-centers-itc.php
-
-
 
 print(nrow(zonesassessed))
 print(nrow(distinct(zonesassessed, Country)))
@@ -244,88 +241,8 @@ kable(arrange(LACzones[1:5], Country)) %>%   kable_styling()
 write.csv2(arrange(LACzones, Country), "C:/Users/Frederik/surfdrive/RScripts/SEZs/LACzones.csv", fileEncoding="latin1")
 
 ```
-Data regarding the work of the EU Code of Conduct Group can be obtained from the website of the European Council.
+Data regarding the work of the EU Code of Conduct Group can be obtained from the website of the European Council under <https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf>.
 
-```{r Code of Conduct}
-
-file <- "https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf"
-
-out <- extract_tables(file, pages = c(4:95), columns=list(c(5, 10, 20, 30)), method = "stream", encoding="UTF-8", output="matrix")
-
-
-for (i in c(1:44, 46:90)){
-  out[[i]]<- as.data.frame(out[[i]])
-  p <- ncol(out[[i]])
-   if (p==5){
-     colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
-   }
-  if (p==4){
-   out[[i]] %<>% add_column(.before=1, Country=NA)
-colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
-}
-    if(p==3){
-      out[[i]] %<>% add_column(.before=1, Country=NA)
-         out[[i]] %<>% add_column(.after=4, Rollback=NA)
-         colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
-
-    }
-     }
-
-for (i in c(45,91)){
-    out[[i]]<- as.data.frame(out[[i]])
-    out[[i]] %<>% add_column(.after=4, Rollback=NA)
-    colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
-
-}
- 
- df <- as.data.frame(do.call(rbind, out))
-
- df<- df[-c(1:3, 991:993, 1233:1242),] ##removing former headings from table
-df <- as.data.frame(lapply(df, trimws), stringsAsFactors = FALSE) 
-num <- which(nchar(df$Standstill)==4, arr.ind=TRUE) ##ttaking all the lines where a standstill date is entered as principal lines
- l <- length(num)  # l tells us how many "principal" lines there are
-  l2 <- nrow(df) # l2 tells us how many lines there are in total
-  ##now a loop to copy the lines to each other. In the future, try to write this as a function
-  for (k in 1:l){
-   ## the following feature solves the problem of the last lines at the end
-     if (k<l){
-      num2 <- num[k+1]-num[k]-1
-    }else {
-      num2 <- l2-num[k]
-    } 
-    if(num2>0){ 
-     ##here a loop is used to copy one line after the other 
-       for (j in 1:num2){
-        df[num[k],] <- paste(df[num[k],], df[num[k]+j,], sep=" ")
-      }
-    } else {}
-  }
-
-df2<- df[num,] 
-df2 %<>% mutate(eurostat= substr(Regime, start = 1, stop = 2))  
-df2 %<>% select(-Country)
-df2 %<>% separate(col=Standstill, into=c("StandstillYear", "Institution"), sep=5)  
-df2 %<>% separate(col=Regime, into=c("Identifier", "Regime_name"), sep=6)
-df2 %<>% separate(col=Regime_name, into=c("rest", "Regime_name"), sep='"')
-df2 %<>% select(-rest)
-df2 %<>% separate(col=Assessment, into=c("Assessment", "Document"), sep=" \\(doc.")
-df2 %<>% mutate(Assessment = str_replace_all(Assessment,"15", ""))
-df2 %<>% mutate(Assessment = str_replace_all(Assessment,"HARMFUL", "Harmful"))
-
-df2$Document <- str_replace(df2$Document, "\\)", "")
-df2$Document <- str_replace(df2$Document, ". ", "")
-df2 %<>% mutate(Rollback= str_replace_all(Rollback,"NA",""))
-df2 %<>% mutate(Institution = str_replace_all(Institution,"\\(", ""))
-df2 %<>% mutate(Institution = str_replace_all(Institution,"\\)", ""))
-df2 %<>% mutate_all(trimws)
-df2  %<>% mutate(Institution = na_if(Institution,"")) %<>% mutate(Institution = str_replace_na(Institution, "COCG"))
-df2$iso3c <- countrycode(df2$eurostat, origin="eurostat", destination="iso3c")
-for (i in 1:nrow(df2)){
-if (df2$eurostat[i]=="AN"){df2$iso3c[i] <- "BES"}
-  if (df2$eurostat[i]=="NA"){df2$iso3c[i] <- "NAM"}
-  }
-write_csv2(df2, "codeofconduct.csv")
-```
 Now we can first compare whether the EU document lists all regimes that are listed in the OECD report.
 ```{r comparison EU and OECD data}
 
@@ -393,40 +310,6 @@ complete %>% filter(is.na(Membership)) %>% nrow
 write.csv2(arrange(complete[c("Country", "Harmful_COCG", "Harmful_OECD_FHTP", "Regimeassessed", "Harmfulregimesfound")], Harmfulregimesfound), "C:/Users/Frederik/surfdrive/RScripts/SEZs/complete.csv", fileEncoding="latin1")
 ```
 
-
-```{r circular diagram}
-
-colours <- as.data.frame(colours)
-colours <- rownames_to_column(colours, var = "category")
-complete <- left_join(complete, colours)
-complete %<>% mutate_at(.vars="colours", .funs=toupper) ##to write colour names in upper case
-complete %<>% mutate(inc_frame_colour = case_when(Membership=="Yes"~"#000000", is.na(Membership)~"#FFFFFF")) ##transforming inclusive framework membership into colours
-complete %<>% mutate(SEZ_colour = case_when(SEZno>0~"#000000", SEZno==0~"#FFFFFF")) ### transforming existence of an SEZ into colours                                     
-                                       
-                                       
-circos.par(track.height=0.1, track.margin =c(0.01, 0.06))
-circos.initialize(factors=complete$iso3c, xlim = c(0, 10))
-## the outer track includes the type of benefit and the country name
-circos.track(factors=complete$iso3c, ylim=c(0,10),     panel.fun = function(x, y) {
-        circos.text(CELL_META$xcenter, CELL_META$ylim[2]+20, 
-                           CELL_META$sector.index, facing="clockwise", cex=0.6)
-  circos.rect(xleft=CELL_META$xlim[1], ybottom=CELL_META$ylim[1], xright=CELL_META$xlim[2], ytop=CELL_META$ylim[2], density=-1, col=complete$colours[CELL_META$sector.numeric.index])
-})
-##this track assesses whether the country is member of the inclusive framework
-circos.track(factors=complete$iso3c, ylim=c(0,10),     panel.fun = function(x, y) {
-       circos.rect(xleft=CELL_META$xlim[1], ybottom=CELL_META$ylim[1], xright=CELL_META$xlim[2], ytop=CELL_META$ylim[2], density=-1, col=complete$inc_frame_colour[CELL_META$sector.numeric.index])
-    })
-circos.text(CELL_META$xcenter, CELL_META$ylim[2]+9,"Inclusive Framework Membership", sector.index = "PRY", track.index=2, facing="bending.inside", cex=0.7)        
-
-##this track assesses whether the country has an SEZ
-circos.track(factors=complete$iso3c, ylim=c(0,10),     panel.fun = function(x, y) {
-       circos.rect(xleft=CELL_META$xlim[1], ybottom=CELL_META$ylim[1], xright=CELL_META$xlim[2], ytop=CELL_META$ylim[2], density=-1, col=complete$SEZ_colour[CELL_META$sector.numeric.index])
-    })
-circos.text(CELL_META$xcenter, CELL_META$ylim[2]+9,"SEZ exist", sector.index = "PRY", track.index=3, facing="bending.inside", cex=0.7)    
-
-circos.clear()
-
-```
 
 
 ```{r all zones assessed by EU}
