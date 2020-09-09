@@ -60,8 +60,6 @@ unctad[104,1]<-"Bhutan"
 
 unctad <- countrycustommatch::countrymatch_w_list(df=UNCTAD, columnname="country")
 
-
-
 LAC <- left_join(LAC,UNCTAD[c("iso3c", "Number of SEZs (established by law)","Number of single-enterprise zones (\"free points\")","Year of the first promulgation of lawc")], by="iso3c")
 LAC  %<>%  rename(SEZno = "Number of SEZs (established by law)", FPno ="Number of single-enterprise zones (\"free points\")", FirstYear= "Year of the first promulgation of lawc") 
 
@@ -97,20 +95,19 @@ LAC %>% filter(SEZno > 0) %>% nrow() %>% print
 ```
 countries.
 
-
-
 The next step consists in adding data that is relevant to assess the kind of tax-benefit available. Data on the "normal" tax regime in the rest of the country is downloaded from CIAT. CIAT provides time series data on "general" tax rates and and "maximum" tax rates. Since "general" excludes surcharges which are generally payable, the "maximum" rates are used. The difference of the SEZ regime from the rest of the country should therefore be regarded as the maximum benefit. Data was downloaded from <https://ciatorg.sharepoint.com/sites/cds/_layouts/15/guestaccess.aspx?docid=0b55688f22c7f4f3c9af47402923b8128&authkey=AflZ26auh2fOQoTW5EHzhfI&e=356a6a32ce38454f94eba7398c54cfca> on 16 June 2020. 
-
 For jurisdictions where CIAT data was not available, data from KPMG was used. It was downloaded from <https://home.kpmg/xx/en/home/services/tax/tax-tools-and-resources/tax-rates-online/corporate-tax-rates-table.html> on 22 June 2020.
 Finally, tax rates for jurisdictions available in neither database were searched on the IBFD Tax Summaries database.
+Data was cleaned and country codes added (see separate document).
+
 
 ```{r combine with tax data, echo=FALSE}
 
 CIATrates <- read_delim("IRPJ_Alicuotas_Maximas.csv", delim=";",skip=3, skip_empty_rows = TRUE, na=c("","n.d.","-"))
 CIATrates <- CIATrates[-(19:1790),-(41:166)]
-CIATrates %<>% rename(Country = X1)
-CIATrates$Country <-  str_replace_all(CIATrates$Country, pattern="[1234/]",replacement= "")
-CIATrates$Country %<>% trimws
+CIATrates %<>% rename(country = X1)
+CIATrates$country <-  str_replace_all(CIATrates$country, pattern="[1234/]",replacement= "")
+CIATrates$country %<>% trimws
 df <- CIATrates ##code does not work with tibbles yet
 source("C:/Users/Frederik/surfdrive/RScripts/custom match to countrycode.R", encoding="UTF-8")
 CIATrates <- df
@@ -118,7 +115,6 @@ CIATrates <- df
 LAC <- left_join(LAC,CIATrates[c("2018", "iso3c")])
 LAC %<>% rename(CIATrate2018 = "2018")
 
-setwd("C:/Users/Frederik/surfdrive/RScripts/SEZs")
 
 KPMGrates <- read_delim("KPMGrates.csv", delim=";", skip_empty_rows = TRUE)
 KPMGrates %<>% rename(Country = Location)

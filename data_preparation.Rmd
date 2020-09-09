@@ -13,6 +13,7 @@ if (!require('tabulizer')) install.packages('tabulizer'); library('tabulizer')
 if (!require('rJava')) install.packages('rJava'); library('rJava')
 if (!require('tidyverse')) install.packages('tidyverse'); library('tidyverse')
 if (!require('magrittr')) install.packages('magrittr'); library('magrittr')
+if (!require('countrycode')) install.packages('countrycode'); library('countrycode')
 
 ```
 
@@ -31,7 +32,7 @@ file <- "https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf
 
 out <- extract_tables(file, pages = c(4:95), columns=list(c(5, 10, 20, 30)), method = "stream", encoding="UTF-8", output="matrix")
 
-columnnames <- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
+columnnames <- c("country", "regime", "standstill", "assessment", "rollback")
 for (i in c(1:44, 46:90)){
   out[[i]]<- as.data.frame(out[[i]])
   p <- ncol(out[[i]])
@@ -39,12 +40,12 @@ for (i in c(1:44, 46:90)){
      colnames(out[[i]])<- columnnames
    }
   if (p==4){
-   out[[i]] %<>% add_column(.before=1, Country=NA)
+   out[[i]] %<>% add_column(.before=1, country=NA)
 colnames(out[[i]])<- columnnames
 }
     if(p==3){
-      out[[i]] %<>% add_column(.before=1, Country=NA)
-         out[[i]] %<>% add_column(.after=4, Rollback=NA)
+      out[[i]] %<>% add_column(.before=1, country=NA)
+         out[[i]] %<>% add_column(.after=4, rollback=NA)
          colnames(out[[i]])<- columnnames
 
     }
@@ -52,56 +53,46 @@ colnames(out[[i]])<- columnnames
 
 for (i in c(45,91)){
     out[[i]]<- as.data.frame(out[[i]])
-    out[[i]] %<>% add_column(.after=4, Rollback=NA)
+    out[[i]] %<>% add_column(.after=4, rollback=NA)
     colnames(out[[i]])<- columnnames
 
 }
  
- df <- as.data.frame(do.call(rbind, out))
+cc_regimes <- as.data.frame(do.call(rbind, out))
 
- df<- df[-c(1:3, 991:993, 1233:1242),] ##removing former headings from table
-df <- as.data.frame(lapply(df, trimws), stringsAsFactors = FALSE) 
-num <- which(nchar(df$Standstill)==4, arr.ind=TRUE) ##ttaking all the lines where a standstill date is entered as principal lines
- l <- length(num)  # l tells us how many "principal" lines there are
-  l2 <- nrow(df) # l2 tells us how many lines there are in total
-  ##now a loop to copy the lines to each other. In the future, try to write this as a function
-  for (k in 1:l){
-   ## the following feature solves the problem of the last lines at the end
-     if (k<l){
-      num2 <- num[k+1]-num[k]-1
-    }else {
-      num2 <- l2-num[k]
-    } 
-    if(num2>0){ 
-     ##here a loop is used to copy one line after the other 
-       for (j in 1:num2){
-        df[num[k],] <- paste(df[num[k],], df[num[k]+j,], sep=" ")
-      }
-    } else {}
+cc_regimes<- cc_regimes[-c(1:3, 991:993, 1233:1242),] #removing former headings from table
+cc_regimes <- as.data.frame(lapply(cc_regimes, trimws), stringsAsFactors = FALSE) 
+pl <- which(nchar(cc_regimes$standstill)==4, arr.ind=TRUE) #taking all the lines where a standstill date is entered as principal lines
+
+cc_regimes <- transformpdftbl::t_pdf_tbl(cc_regimes, pl)
+
+#transformations
+
+##extracting the country identifier (eurostat schema)
+cc_regimes %<>% mutate(eurostat= substr(regime, start = 1, stop = 2))
+## removing country column
+cc_regimes %<>% select(-country)
+##separating the information from various columns
+cc_regimes %<>% separate(col=standstill, into=c("standstill_year", "institution"), sep=5)  
+cc_regimes %<>% separate(col=regime, into=c("identifier", "regime_name"), sep=6)
+cc_regimes %<>% separate(col=regime_name, into=c("rest", "regime_name"), sep='"')
+cc_regimes %<>% select(-rest)
+cc_regimes %<>% separate(col=assessment, into=c("assessment", "document"), sep=" \\(doc.")
+cc_regimes %<>% mutate(assessment = str_replace_all(assessment,"15", ""))
+cc_regimes %<>% mutate(assessment = str_replace_all(assessment,"HARMFUL", "Harmful"))
+
+cc_regimes$document <- str_replace(cc_regimes$document, "\\)", "")
+cc_regimes$document <- str_replace(cc_regimes$document, ". ", "")
+cc_regimes %<>% mutate(rollback= str_replace_all(rollback,"NA",""))
+cc_regimes %<>% mutate(institution = str_replace_all(institution,"\\(", ""))
+cc_regimes %<>% mutate(institution = str_replace_all(institution,"\\)", ""))
+cc_regimes %<>% mutate_all(trimws)
+cc_regimes  %<>% mutate(institution = na_if(institution,"")) %<>% mutate(institution = str_replace_na(institution, "COCG"))
+cc_regimes$iso3c <- countrycode(cc_regimes$eurostat, origin="eurostat", destination="iso3c")
+for (i in 1:nrow(cc_regimes)){
+if (cc_regimes$eurostat[i]=="AN"){cc_regimes$iso3c[i] <- "BES"}
+  if (cc_regimes$eurostat[i]=="NA"){cc_regimes$iso3c[i] <- "NAM"}
   }
-
-df2<- df[num,] 
-df2 %<>% mutate(eurostat= substr(Regime, start = 1, stop = 2))  
-df2 %<>% select(-Country)
-df2 %<>% separate(col=Standstill, into=c("StandstillYear", "Institution"), sep=5)  
-df2 %<>% separate(col=Regime, into=c("Identifier", "Regime_name"), sep=6)
-df2 %<>% separate(col=Regime_name, into=c("rest", "Regime_name"), sep='"')
-df2 %<>% select(-rest)
-df2 %<>% separate(col=Assessment, into=c("Assessment", "Document"), sep=" \\(doc.")
-df2 %<>% mutate(Assessment = str_replace_all(Assessment,"15", ""))
-df2 %<>% mutate(Assessment = str_replace_all(Assessment,"HARMFUL", "Harmful"))
-
-df2$Document <- str_replace(df2$Document, "\\)", "")
-df2$Document <- str_replace(df2$Document, ". ", "")
-df2 %<>% mutate(Rollback= str_replace_all(Rollback,"NA",""))
-df2 %<>% mutate(Institution = str_replace_all(Institution,"\\(", ""))
-df2 %<>% mutate(Institution = str_replace_all(Institution,"\\)", ""))
-df2 %<>% mutate_all(trimws)
-df2  %<>% mutate(Institution = na_if(Institution,"")) %<>% mutate(Institution = str_replace_na(Institution, "COCG"))
-df2$iso3c <- countrycode(df2$eurostat, origin="eurostat", destination="iso3c")
-for (i in 1:nrow(df2)){
-if (df2$eurostat[i]=="AN"){df2$iso3c[i] <- "BES"}
-  if (df2$eurostat[i]=="NA"){df2$iso3c[i] <- "NAM"}
-  }
-write_csv2(df2, "codeofconduct.csv")
+write_csv2(cc_regimes, "data_prepared/cc_regimes.csv")
+saveRDS(cc_regimes, "data_prepared/cc_regimes.rds")
 ```
