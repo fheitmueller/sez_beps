@@ -11,6 +11,9 @@ if (!require('XML')) install.packages('XML'); library('XML')
 if (!require('pdftools')) install.packages('pdftools'); library('pdftools') 
 if (!require('tabulizer')) install.packages('tabulizer'); library('tabulizer') 
 if (!require('rJava')) install.packages('rJava'); library('rJava')
+if (!require('tidyverse')) install.packages('tidyverse'); library('tidyverse')
+if (!require('magrittr')) install.packages('magrittr'); library('magrittr')
+
 ```
 
 # Content
@@ -28,21 +31,21 @@ file <- "https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf
 
 out <- extract_tables(file, pages = c(4:95), columns=list(c(5, 10, 20, 30)), method = "stream", encoding="UTF-8", output="matrix")
 
-
+columnnames <- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
 for (i in c(1:44, 46:90)){
   out[[i]]<- as.data.frame(out[[i]])
   p <- ncol(out[[i]])
    if (p==5){
-     colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
+     colnames(out[[i]])<- columnnames
    }
   if (p==4){
    out[[i]] %<>% add_column(.before=1, Country=NA)
-colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
+colnames(out[[i]])<- columnnames
 }
     if(p==3){
       out[[i]] %<>% add_column(.before=1, Country=NA)
          out[[i]] %<>% add_column(.after=4, Rollback=NA)
-         colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
+         colnames(out[[i]])<- columnnames
 
     }
      }
@@ -50,7 +53,7 @@ colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollbac
 for (i in c(45,91)){
     out[[i]]<- as.data.frame(out[[i]])
     out[[i]] %<>% add_column(.after=4, Rollback=NA)
-    colnames(out[[i]])<- c("Country", "Regime", "Standstill", "Assessment", "Rollback")
+    colnames(out[[i]])<- columnnames
 
 }
  
