@@ -1,0 +1,43 @@
+country;iso3c;additional_rate;additional_rate_source
+Antigua and Barbuda;ATG;;
+Argentina;ARG;;
+Aruba;ABW;;
+Barbados;BRB;;
+Bolivia;BOL;;
+Brazil;BRA;;
+Bahamas, The;BHS;;
+Belize;BLZ;0.75;IBFD Country Tax Guide 2019
+Chile;CHL;;
+Colombia;COL;;
+Costa Rica;CRI;;
+Cuba;CUB;35;http://www.parlamentocubano.gob.cu/index.php/documento/ley-del-sistema-tributario/
+Curacao;CUW;;
+Dominica;DMA;;
+Dominican Republic;DOM;;
+Ecuador;ECU;;
+Grenada;GRD;;
+Guatemala;GTM;;
+Guyana;GUY;40;IBFD Country Tax Guide
+Honduras;HND;;
+Haiti;HTI;30;https://import-export.societegenerale.fr/fr/fiche-pays/haiti/presentation-fiscalite
+Jamaica;JAM;;
+St. Kitts and Nevis;KNA;;
+Cayman Islands;CYM;;
+St. Lucia;LCA;;
+St. Martin (French part);MAF;20;http://www.com-saint-martin.fr/Fiscalite-Saint-Martin-Antilles.html
+Mexico;MEX;;
+Nicaragua;NIC;;
+Panama;PAN;;
+Peru;PER;;
+Puerto Rico;PRI;37.5;PWC Tax summaries
+Paraguay;PRY;;
+Suriname;SUR;;
+El Salvador;SLV;;
+Sint Maarten (Dutch part);SXM;;
+Turks and Caicos Islands;TCA;;
+Trinidad and Tobago;TTO;;
+Uruguay;URY;;
+St. Vincent and the Grenadines;VCT;;
+Venezuela, RB;VEN;;
+British Virgin Islands;VGB;0;Deloitte International Tax
+Virgin Islands (U.S.);VIR;38.5;Deloitte International Tax
