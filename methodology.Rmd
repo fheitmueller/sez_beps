@@ -34,9 +34,7 @@ The analysis proceeds in four steps:
 - Analysing the corporate tax benefits of SEZs in Latin America and the Caribbean
 - Assessing the impact 
 
-
-
-In a first step, the geographical scope of the analysis is determined. Since the article deals principally with the Latin American region, all countries and jurisdiction belonging to the region "Latin America & Caribbean" in the World Bank classification are included. Countries and their regional classification are obtained from: http://databank.worldbank.org/data/download/site-content/CLASS.xls, Accessed on 20 July 2020.The sample includes 
+In a first step, the geographical scope of the analysis is determined. Since the article deals principally with the Latin American region, all countries and jurisdiction belonging to the region "Latin America & Caribbean" according to the World Bank's classification are included. Countries and their regional classification are obtained from: http://databank.worldbank.org/data/download/site-content/CLASS.xls, Accessed on 20 July 2020.The sample includes 
 
 ```{r countries included}
 
@@ -92,7 +90,7 @@ Data was cleaned and country codes added (see separate document).
 
 In the next step, a table was prepared where missing values for generally applicable tax rates were replaced. Rates were manually searched from IBFD Country Tax Guides and official websites of the country in question. 
 Afterwards, a database of applicable tax rates in the countries' SEZ was compiled manually. The main source used were IBFD Country Tax Guides. Where these did not yield a clear result, the domestic law was directly consulted.
-In order to provide a graph the 
+In order to create a map with the different type of regimes..
 ```{r classifying countries}
 
 ciat_rates_clean <- readRDS("data_prepared/ciat_rates_clean.rds")
@@ -174,121 +172,142 @@ ggarrange(latam, ggarrange(car, leg, ncol=1, nrow=2), ncol=2, nrow=1)
 
 ## Analysis of impact of BEPS Action 5 and Code of Conduct
 
-The OECD reports do not classify directly which regimes are special economic zones, but the information is usually contained in the regime name. I filter the regimes by those which contain the a reference to a "zone", "centre", "city", "area" in them or which referred directly to Labuan, a Malaysian SEZ. Afterwards false hits were excluded, mainly where "centre" did not refer to a financial centre but to a "centre" function of a firm, such as treasury.
+Data regarding the work of the EU Code of Conduct Group can be obtained from the website of the European Council under <https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf>.
+The data is converted from pdf to csv following a prodcedure listed in the data_preparation document.
+
+### Comparing data between both organizations
+Now we can first compare whether the EU document lists all regimes that are listed in the OECD report.
 
 
-```{r BEPS Action 5 data}
-##imported from other research project
-harmfulregimes <- read.delim("C:/Users/Frederik/surfdrive/RScripts/Action 5 Harmful regimes/action5regimes.csv", sep=";", header = TRUE, fileEncoding="latin1")
 
-df <- as.data.frame(harmfulregimes) ##code does not work with tibbles yet
-source("C:/Users/Frederik/surfdrive/RScripts/custom match to countrycode.R", encoding="UTF-8")
-harmfulregimes <- df
+```{r comparison EU and OECD data}
 
-harmfulregimes <- left_join(harmfulregimes, wb[c("iso3c", "region")], by="iso3c")
+beps_regimes <- readRDS("data_prepared/beps_regimes_clean.rds")
+cc_regimes <- readRDS("data_prepared/cc_regimes_clean.rds")
 
-zonesassessed <- filter(harmfulregimes, grepl(paste(c("zone", "centre", "city", "area", "Labuan"), collapse="|"), Regime_name, ignore.case=TRUE))
+cc_regimes %>% filter(institution==c("OECD FHTP", "OECD FHTP + COCG")) %>% nrow %>% print
+beps_regimes %>% nrow %>% print
+
+
+```
+
+The EU only lists 64 regimes that were reviewed by the OECD FHTP report, whereas in that report 309 regimes appear. This means that both datasets need to be taken into account.
+
+### Selecting SEZ regimes
+Neither OECD nor EU reports not classify directly which regimes are special economic zones, but the information is usually contained in the regime name. We filter the regimes by those which contain the a reference to a "zone", "centre", "city", "area" in them or which referred directly to Labuan, a Malaysian SEZ. Afterwards false hits were excluded, mainly where "centre" did not refer to a financial centre but to a regime for a "centre" function of a firm, such as treasury. In the case of the EU, the word "centre" was not used, but some further regimes that appeared to be SEZs were added.
+
+```{r select BEPS Action 5 SEZ}
+
+beps_regimes_sez <- filter(beps_regimes, grepl(paste(c("zone", "centre", "city", "area", "Labuan"), collapse="|"), regime_name, ignore.case=TRUE))
 
 ##manual removal of regimes falsely identified as SEZ
-zonesassessed <- zonesassessed[-c(12:13, 16, 22:26, 28, 32, 33, 41, 44, 68, 71,72),] ## <https://thailand.ahk.de/en/members/member-news/news-details/overview-of-the-international-business-centre-regime> 
+beps_regimes_sez <- beps_regimes_sez[-c(12:13, 16, 22:26, 28, 32, 33, 41, 44, 68, 71,72),] ## <https://thailand.ahk.de/en/members/member-news/news-details/overview-of-the-international-business-centre-regime> 
 ##https://lawphil.net/statutes/repacts/ra1999/ra_8756_1999.html
 ## https://georgiawealth.info/en/the-face-of-virtual-zone-in-georgia/
 ##https://juslaws.com/international-trade-centers-itc.php
 
-print(nrow(zonesassessed))
-print(nrow(distinct(zonesassessed, Country)))
+nrow(beps_regimes_sez)
+nrow(distinct(beps_regimes_sez, country))
 
-```
-
-As of July 2019 (when the latest FHTP review was published), the FHTP had reviewed 59 Special Economic Zones regimes in 31 countries worldwide (or was in the process of undertaking a review).
-```{r select Latin American}
-
-
-LACzones <- filter(zonesassessed, region=="Latin America & Caribbean")
-kable(arrange(LACzones[1:5], Country)) %>%   kable_styling()
-write.csv2(arrange(LACzones, Country), "C:/Users/Frederik/surfdrive/RScripts/SEZs/LACzones.csv", fileEncoding="latin1")
-
-```
-Data regarding the work of the EU Code of Conduct Group can be obtained from the website of the European Council under <https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf>.
-The data is converted from pdf to csv following a prodcedure listed in the data_preparation document.
-Now we can first compare whether the EU document lists all regimes that are listed in the OECD report.
-```{r comparison EU and OECD data}
-
-
-df2 %>% filter(Institution=="(OECD FHTP)") %>% nrow %>% print
-
-harmfulregimes %>% nrow %>% print
 
 
 ```
-The EU only lists 72 regimes that were reviewed by the OECD FHTP report, whereas in that report 309 regimes appear. This means that both datasets need to be taken into account.
-In a next step, it can be anlysed which EU Code of Conduct assessments related to countries of the LAC region.
+As of July 2019 (when the latest FHTP review was published), the FHTP had reviewed 60 Special Economic Zones regimes in 32 countries worldwide (or was in the process of undertaking a review).
 
-```{r Code of conduct LAC}
+```{r select Code of Conduct SEZ}
+cc_regimes_sez <- filter(cc_regimes, grepl(paste(c("zone", "city", "area", "Labuan", "The International Financial Services Centre (Dublin)", "Trieste Financial Services and Insurance centre", "Botswana International Financial Services Centre Companies (BITCC)"), collapse="|"), regime_name, ignore.case=TRUE)) 
+# just the word 'centre' was not used as criteria since it produced too many errors. Instead, certain centres that seemed to be zones were included.
+#filtering out regimes that rather seem to be disadvantaged area regimes
+cc_regimes_sez %<>% filter(!identifier%in% c("BE008","DE006", "HR002", "HR003", "HR005", "IE007", "RO002", "GE004", "VN005")) 
+nrow(cc_regimes_sez)
+cc_regimes_sez %>% distinct(iso3c) %>% nrow
 
-LACEU <- LAC %>% select(Country, iso3c)
-
-LACEU <- left_join(LACEU, df2)
-
-## identifying regimes that related to SEZs
-LACEUzones <- filter(LACEU, grepl(paste(c("zone", "centre", "city", "area", "Labuan"), collapse="|"), Regime_name, ignore.case=TRUE))
-
-LACEUzones <- LACEUzones[-c(18,24),] ##removing the Panamanian "Foreign owned call centre" and Uruguyan "Shared service centre" from the obtained list
 
 ```
-In the next step, a joint table of FHTP and Code of Conduct assessments of SEZ regimes in the LAC region will be produced.
-For that purpose that codes in the assessment of the FHTP report will be recoded to display the intial assessment. The codes "Not harmful (amended)", "In the process of being eliminated/amended" and "In the process of being eliminated" imply that the regime has initially been assessed as harmful. Therefore, they will be recoded as such. "Out of scope" on the other hand implies that the regime is "Not harmful". If the field was left empty, this most likely implies that the regime is still "Under review".
+As of November 2019, the EU Code of Codunct Group reviewed 77 SEZ regimes in 46 countries.
+
+### Production of a joint table.
+
+
+For the remainder of the analyis, only the SEZ regimes located in Latin America are considered.
+
+In the next step, a joint table of FHTP and Code of Conduct assessments of SEZ regimes in the LAC region will be produced. FHTP and Code of Conduct use different categories to describe status of regimes and outcomes of assessment. 
+Therefore, codes in the assessment of the FHTP report will be recoded to display the intial assessment carried out by the FHTP and not the current status of the regime. The codes "Not harmful (amended)", "In the process of being eliminated/amended" and "In the process of being eliminated" imply that the regime has initially been assessed as harmful. Therefore, they will be recoded as such. "Out of scope" on the other hand implies that the regime is "Not harmful". 
+
+If the field was left empty, this most likely implies that the regime is still "Under review".
 
 
 ```{r common assessment table}
-LACzones %<>% select(Country,Regime_name,Status,iso3c, Comments)
-LACzones %<>% rename(Assessment=Status)
-LACzones %<>% add_column(Institution="OECD FHTP")
+beps_regimes_sez %<>% select(!c(regime_type, country))
+beps_regimes_sez %<>% rename(assessment=status)
+beps_regimes_sez %<>% add_column(institution="OECD FHTP")
 
-LACEUzones %<>% select(Country, Regime_name, Assessment, iso3c, Institution, Rollback)
-LACEUzones %<>% rename(Comments=Rollback)
+cc_regimes_sez %<>% select(regime_name, assessment, iso3c, institution, rollback)
+cc_regimes_sez %<>% rename(comments=rollback)
 
-allLACzones <- bind_rows(LACEUzones, LACzones, .id="Source")
-allLACzones$Source %<>% recode("1" = "EU", "2" ="OECD")
- 
-allLACzones$Assessment %<>% recode("Not harmful (amended)" = "Harmful", "In the process of being eliminated/amended" ="Harmful", "In the process of being eliminated"="Harmful", "Out of scope"="Not harmful", "Not Harmful"="Not harmful")
-allLACzones  %<>% mutate(Assessment = na_if(Assessment,"")) %<>% mutate(Assessment = str_replace_na(Assessment, "Under review"))
+regimes_sez <- bind_rows(beps_regimes_sez, cc_regimes_sez, .id="source")
+regimes_sez$source %<>% recode("1" = "OECD", "2" ="EU")
+
+regimes_sez$assessment %<>% as_factor
+regimes_sez$assessment %<>% fct_collapse("harmful" = 
+                                           c("Not harmful (amended) except for the extension to new entrants between  July 01 and 1 October 201, which is harmful", 
+                                             "Not harmful (amended)",
+                                             "Harmful",
+                                             "In the process of being amended",
+                                             "Abolished",
+                                             "In the process of being eliminated/amended",
+                                             "Out of scope (amended)",
+                                             "In the process of being eliminated"), 
+                                         "not_harmful" =
+                                           c("Not operational",
+                                             "Disadvantaged areas regime",
+                                             "Out of scope",
+                                             "Not harmful",
+                                             "Not harmful, but annual monitoring",
+                                             "Not harmful17",
+                                             "Not Harmful"),
+                                         "under_review" = 
+                                           c("Under review",
+                                             "Not assessed, but annual monitoring",
+                                             "Not assessed",
+                                             "Not assessed14",
+                                             "",
+                                             "Not currently harmful (not yet operational), but annual monitoring" ))
+
+regimes_sez$institution  %<>%    recode("OECD FHTP" = "OECD_FHTP")
+
+write_csv2(regimes_sez, "data_created/regimes_sez_combined.csv")
+saveRDS(regimes_sez, "data_created/regimes_sez_combined.rds")
+
+regimes_sez_ctry <- regimes_sez %>% pivot_wider(id_cols=c("iso3c", "institution"), names_from=c("assessment", "institution"), values_from="regime_name", values_fn=list(assessment_n=median))
 
 
-allLACzones$Institution %<>% recode("OECD FHTP" = "OECD_FHTP")
+regimes_sez_ctry %<>%   add_column(harmfulregimes_found = NA)%<>% mutate(harmfulregimes_found= case_when(harmful_COCG=="NULL"&harmful_OECD_FHTP=="NULL"~"no", TRUE~"yes" ))
+regimes_sez_ctry %<>% add_column(regime_assessed = "yes")
 
 
-allLACzones     %<>% 
-  pivot_wider(id_cols=c("iso3c", "Country", "Institution"), names_from=c("Assessment", "Institution"), values_from="Regime_name", values_fn=list(Assessment_n=median))
-##allLACzones  %<>% mutate(Harmful_COCG = na_if(Harmful_COCG, "NULL"))
 
-allLACzones %<>% add_column(Harmfulregimesfound = NA)%<>% mutate(Harmfulregimesfound= case_when(Harmful_COCG=="NULL"&Harmful_OECD_FHTP=="NULL"~"No", TRUE~"Yes" ))
-allLACzones %<>% add_column(Regimeassessed = "Yes")
+lac_sez <- left_join(lac_sez, regimes_sez_ctry[c("iso3c","harmful_COCG", "harmful_OECD_FHTP", "harmfulregimes_found","regime_assessed")])
+lac_sez %<>% mutate(regime_assessed = str_replace_na(regime_assessed, "no"))
+lac_sez %<>% mutate_at(.vars=c("harmful_COCG", "harmful_OECD_FHTP"), as.character)
 
-complete <- left_join(lac_sez, allLACzones[c("iso3c","Harmful_COCG", "Harmful_OECD_FHTP", "Harmfulregimesfound","Regimeassessed")])
-complete %<>% mutate(Regimeassessed = str_replace_na(Regimeassessed, "No"))
-complete %<>% mutate_at(.vars=c("Harmful_COCG", "Harmful_OECD_FHTP"), as.character)
-
+##add inclusive framework and write to file
 source("C:/Users/Frederik/surfdrive/RScripts/extracting Inclusive Framework jurisdictions.R")
 
 complete <- left_join(complete, incframe[c("iso3c","Membership")])
-setwd("C:/Users/Frederik/surfdrive/RScripts/SEZs")
 complete %>% filter(is.na(Membership)) %>% nrow
 
 write.csv2(arrange(complete[c("Country", "Harmful_COCG", "Harmful_OECD_FHTP", "Regimeassessed", "Harmfulregimesfound")], Harmfulregimesfound), "C:/Users/Frederik/surfdrive/RScripts/SEZs/complete.csv", fileEncoding="latin1")
 ```
 
 
+```{r select Latin American}
 
-```{r all zones assessed by EU}
+harmfulregimes <- left_join(harmfulregimes, wb[c("iso3c", "region")], by="iso3c")
 
-EUzones <- filter(df2, grepl(paste(c("zone", "city", "area", "Labuan", "The International Financial Services Centre (Dublin)", "Trieste Financial Services and Insurance centre", "Botswana International Financial Services Centre Companies (BITCC)"), collapse="|"), Regime_name, ignore.case=TRUE)) # just the word 'centre' was not used as criteria since it produced too many errors. Instead, certain centres that seemed to be zones were included.
-#filtering out regimes that rather seem to be disadvantaged area regimes
-EUzones %<>% filter(!identifier%in% c("BE008","DE006", "HR002", "HR003", "HR005", "IE007", "RO002", "GE004", "VN005")) 
-nrow(EUzones)
-EUzones %>% distinct(iso3c) %>% nrow
-
-
+LACzones <- filter(zonesassessed, region=="Latin America & Caribbean")
+kable(arrange(LACzones[1:5], Country)) %>%   kable_styling()
+write.csv2(arrange(LACzones, Country), "C:/Users/Frederik/surfdrive/RScripts/SEZs/LACzones.csv", fileEncoding="latin1")
 
 ```
 

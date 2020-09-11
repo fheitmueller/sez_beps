@@ -137,14 +137,11 @@ for (i in 1:11){
 assign(paste('ext',i,sep=''),ext)
 }
 ext_list<-list(ext1,ext2,ext3,ext4,ext5,ext6,ext7,ext8,ext9,ext10,ext11)
-
-```
-```{r combination}
 ##At the end of the loop all dataframes are combined in one.
 
 beps_regimes <- do.call(rbind, ext_list)
-
 ```
+
 Next the data is tidied in order to make it usable for analysis. The first column containing only numbers is taken out, trailing and leading spaces are removed and there is a loop to take numbers stemming from footnotes out. In Switzerland, several regimes are situated by subnational entities. As later on, analysis will only be carried out at national level, the cantonal names are removed and all data is analyzed on the national level. 2 regimes that are amended are reported as having a harmful feature, namely the permmission of new entrants for some months longer than mandated by the OECD.For 2 regimes that are potentially harmful but not actually harmful, a date in the future at which the regime is abolished. These pieces of information are removed, as considered of minor importance.
 ```{r tidying the data and adding countrycodes}
 ##tidying the data
@@ -154,6 +151,9 @@ beps_regimes <- mutate_all(beps_regimes, str_trim)
 for (i in 1:9){beps_regimes$status <- str_remove(beps_regimes$status, as.character(i))} 
 beps_regimes <- countrycustommatch::countrymatch_w_list(df=beps_regimes, columnname="country")
 
+# manually adding codes for China (because apostroph in different format than UTF-8) and for Switzerland because of differentiation between federal and cantonal level in country column
+beps_regimes$iso3c[14] <- "CHN"
+beps_regimes$iso3c[124:128] <- "CHE"
 
 write_csv2(beps_regimes, "data_prepared/beps_regimes_clean.csv")
 saveRDS(beps_regimes, "data_prepared/beps_regimes_clean.rds")
