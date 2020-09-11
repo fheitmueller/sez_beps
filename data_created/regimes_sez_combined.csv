@@ -1,138 +1,138 @@
-source;regime_name;assessment;comments;iso3c;institution
-OECD;Technology development zones regime;harmful;Substance requirements (nexus approach) in place. Grandfathering in accordance with FHTP timelines, except for extension as noted.;TUR;OECD_FHTP
-OECD;City of knowledge technical zone;harmful;Substance requirements (nexus approach) in place. No grandfathering provided.;PAN;OECD_FHTP
-OECD;Aqaba special economic zone;under_review;Regime under review by FHTP.;JOR;OECD_FHTP
-OECD;Development zone;harmful;Ring-fencing addressed but substantial activities factor implicated;JOR;OECD_FHTP
-OECD;Special economic zones;harmful;Potentially harmful features will be addressed.;KAZ;OECD_FHTP
-OECD;Special economic zone;not_harmful;Regime not operational.;KEN;OECD_FHTP
-OECD;Free economic zone taxation regime;not_harmful;Subject to monitoring to ensure continued low risk of BEPS.;LTU;OECD_FHTP
-OECD;Free trade zones;harmful;No grandfathering provided.;MNG;OECD_FHTP
-OECD;Free zone at science & technology park;under_review;Regime under review by FHTP.;QAT;OECD_FHTP
-OECD;Free zone areas;under_review;Regime under review by FHTP.;QAT;OECD_FHTP
-OECD;International trade zone;harmful;Grandfathering in accordance with FHTP timelines.;SYC;OECD_FHTP
-OECD;Free zones;harmful;Substance requirements (nexus approach) in place. No grandfathering provided.;URY;OECD_FHTP
-OECD;Export processing zone;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP
-OECD;Special provisions in respect of newly established units in special economic zones;not_harmful;No harmful features.;IND;OECD_FHTP
-OECD;Special economic zone regime;not_harmful;No benefits for income from geographically mobile activities.;IDN;OECD_FHTP
-OECD;Special zones for international competitiveness development;not_harmful;No harmful features.;JPN;OECD_FHTP
-OECD;Special economic zones;not_harmful;Subject to monitoring to ensure continued low risk of BEPS.;LVA;OECD_FHTP
-OECD;Special economic zone3;not_harmful;Regime not operational.;KEN;OECD_FHTP
-OECD;Astana international financial centre;harmful;Potentially harmful features will be addressed.;KAZ;OECD_FHTP
-OECD;Labuan leasing;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. No grandfathering provided.;MYS;OECD_FHTP
-OECD;Casablanca finance city;under_review;Regime under review by FHTP.;MAR;OECD_FHTP
-OECD;Qatar financial centre (QFC);under_review;Regime under review by FHTP.;QAT;OECD_FHTP
-OECD;Labuan financial services;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. No grandfathering provided.;MYS;OECD_FHTP
-OECD;Banks and holding companies in offshore zones;harmful;No grandfathering provided.;MAR;OECD_FHTP
-OECD;Free trade zones2;not_harmful;Regime not operational.;NGA;OECD_FHTP
-OECD;Free zone;harmful;Potentially harmful features will be addressed.;ABW;OECD_FHTP
-OECD;Free trade zone;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. No grandfathering provided.;CRI;OECD_FHTP
-OECD;E-Zone;harmful;Benefits for income from geographically mobile activities removed. No grandfathering provided.;CUW;OECD_FHTP
-OECD;Free trade zones;under_review;Regime under review by FHTP.;DOM;OECD_FHTP
-OECD;Special economic zone;under_review;Regime under review by FHTP.;GAB;OECD_FHTP
-OECD;Free industrial zone;not_harmful;No benefits for income from geographically mobile activities.;GEO;OECD_FHTP
-OECD;Special economic zones;under_review;Regime under review by FHTP.;JAM;OECD_FHTP
-OECD;Aqaba special economic zone;under_review;Regime under review by FHTP.;JOR;OECD_FHTP
-OECD;Development zones;harmful;"Ring-fencing addressed; substantial activities factor implicated.";JOR;OECD_FHTP
-OECD;Free trade zones;harmful;No grandfathering provided.;JOR;OECD_FHTP
-OECD;Special economic zones;harmful;Potentially harmful features will be addressed.;KAZ;OECD_FHTP
-OECD;Export processing zone;not_harmful;No benefits for income from geographically mobile activities.;KEN;OECD_FHTP
-OECD;Special economic zone1;not_harmful;Regime not operational.;KEN;OECD_FHTP
-OECD;Foreign investment zone;not_harmful;No benefits for income from geographically mobile activities.;KOR;OECD_FHTP
-OECD;Free economic zone / free trade zone;not_harmful;No benefits for income from geographically mobile activities.;KOR;OECD_FHTP
-OECD;Free economic zone taxation regime;not_harmful;No harmful features.;LTU;OECD_FHTP
-OECD;Freeport zone;harmful;Benefits for income from geographically mobile activities removed. Grandfathering in accordance with FHTP timelines.;MUS;OECD_FHTP
-OECD;Free trade zones;harmful;No grandfathering provided.;MNG;OECD_FHTP
-OECD;Free trade zones;under_review;Regime under review by FHTP.;MAR;OECD_FHTP
-OECD;Free trade zones2;not_harmful;No benefits for income from geographically mobile activities.;NGA;OECD_FHTP
-OECD;Technological industrial development zone;under_review;Regime under review by FHTP.;MKD;OECD_FHTP
-OECD;Colon free zone;not_harmful;No benefits for income from geographically mobile activities.;PAN;OECD_FHTP
-OECD;Panama-Pacifico special economic zone;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. Grandfathering in accordance with FHTP timelines.;PAN;OECD_FHTP
-OECD;Free zone;not_harmful;No benefits for income from geographically mobile activities.;PRY;OECD_FHTP
-OECD;Special economic zone 1 (Ceticos / ZED);not_harmful;No benefits for income from geographically mobile activities..;PER;OECD_FHTP
-OECD;Special economic zone 2 (Zofratacna);not_harmful;No harmful features.;PER;OECD_FHTP
-OECD;Free zone at science & technology park;under_review;Regime under review by FHTP.;QAT;OECD_FHTP
-OECD;Free zone areas;under_review;Regime under review by FHTP.;QAT;OECD_FHTP
-OECD;International trade zone;harmful;Benefits for income from geographically mobile activities removed. Grandfathering in accordance with FHTP timelines;SYC;OECD_FHTP
-OECD;Free trade zones;harmful;Regime is being abolished.;TTO;OECD_FHTP
-OECD;Free zones;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. Grandfathering in accordance with FHTP timelines.;URY;OECD_FHTP
-OECD;Economic zones;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP
-OECD;Export processing zone;not_harmful;No benefits for income from activities.;VNM;OECD_FHTP
-OECD;Industrial parks/zones;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP
-OECD;International business centre;harmful;Benefits for income from geographically mobile activities removed. No grandfathering provided.;CPV;OECD_FHTP
-EU;Employment and (T) Zones;not_harmful;;BEL;COCG
-EU;Enterprise Zones;not_harmful;;DNK;COCG
-EU;Tax Free Zones - ZFU;not_harmful;;FRA;COCG
-EU;Enterprise Zones;not_harmful;;FRA;COCG
-EU;Nord-Pas-de-Calais - Privileged Investment Zone;not_harmful;;FRA;COCG
-EU;Free Zones Act;not_harmful;;HRV;COCG
-EU;Shannon Airport Zone (SAZ);harmful;2002: phase out (doc. 8848/02) 2006: end of grandfathering (doc. 14812/02);IRL;COCG
-EU;Trieste Financial Services and Insurance centre;harmful;2003 (doc. 14812/02);ITA;COCG
-EU;Free Economic Zones;harmful;2004: abolished 2017: end of grandfathering (doc. 13213/03);LTU;COCG
-EU;Special tax zones;not_harmful;;LTU;COCG
-EU;Review of the corporate income tax regime for special tax zones;under_review;;LTU;COCG
-EU;Special Economic Zones and Free Ports;harmful;2004 (doc. 13213/03);LVA;COCG
-EU;Special Economic Zones (original rules);harmful;2011: end of grandfathering (doc. 10857/11);POL;COCG
-EU;Special Economic Zones (amended rules);harmful;2006;POL;COCG
-EU;Special Economic Zones (amended rules);under_review;;POL;COCG
-EU;Polish Investment Zone (PIZ);harmful;;POL;COCG
-EU;Madeira and Sta Maria (Azores) Free Zones;harmful;2003: abolished (doc. 7018/1/03) 2012: end of grandfathering (doc. 10903/12);PRT;COCG
-EU;Industrial Free Zones;not_harmful;;PRT;COCG
-EU;Madeira Free Zones;under_review;;PRT;COCG
-EU;Free zones;harmful;2002: abolished 2012: end of grandfathering;ROU;COCG
-EU;Special Economic Zones;not_harmful;;SVN;COCG
-EU;Amendments to the Economic Zones Act;under_review;;SVN;COCG
-EU;Amendments to the Economic Zones Act;under_review;;SVN;COCG
-EU;Enterprises Zones;not_harmful;;GBR;COCG
-EU;Free zones;harmful;2006 (doc. 9655/06);BES;COCG
-EU;Free zones;harmful;2006 (doc. 7018/1/03;ABW;COCG
-EU;Free Zone;under_review;;ABW;OECD_FHTP
-EU;Special zone San Nicolas;harmful;2018 (doc. 7518/19);ABW;COCG
-EU;eZone;harmful;2018 (doc. 14364/18);CUW;OECD_FHTP
-EU;Manufacturing activities under the eZone regime;harmful;;CUW;COCG
-EU;Free Zones;under_review;;ARE;COCG
-EU;Free Trade Zones (Paradise Found Act, Yida Act, Free Trade Zone Act, Special Economic Zone Act);harmful;;ATG;COCG
-EU;Export Processing Zone;not_harmful;;BRA;COCG
-EU;Export processing zones (EPZ) enterprises;harmful;2019 (doc. 7615/19 + ADDs 1-2);BLZ;COCG
-EU;Commercial free zone (CFZ);not_harmful;;BLZ;COCG
-EU;Free Zones;harmful;2019 (doc. 13207/19);CRI;OECD_FHTP
-EU;Manufacturing activities under the amended Free Zones regime;harmful;2019 (doc. 13207/19);CRI;COCG
-EU;Export processing / commercial free zones enterprises;not_harmful;;GRD;COCG
-EU;Free industrial zones (FIZ);not_harmful;;GEO;COCG
-EU;Special economic zone;not_harmful;;IDN;OECD_FHTP
-EU;Special Economic Zones (SEZS);not_harmful;;IND;OECD_FHTP
-EU;Special Economic Zones;not_harmful;;JAM;COCG
-EU;Free Zone;harmful;2019 (docs. 7517/19 and 9652/19);JOR;OECD FHTP + COCG
-EU;Development Zone;harmful;;JOR;OECD_FHTP
-EU;Least Developed Zones;not_harmful;;JOR;COCG
-EU;Aqaba Special Economic Zone;under_review;;JOR;OECD_FHTP
-EU;Foreign investment Zone (FIZ);harmful;2019 (doc. 7523/19);KOR;COCG
-EU;Free Trade / Economic Zones (FTEZ);harmful;2019 (doc. 7524/19);KOR;COCG
-EU;Free trade Zones;harmful;2019 (doc. 7546/19 + ADD 1);LCA;COCG
-EU;Export Free Zones (EFZ) or Free Trade Zones (FTZ);harmful;;MAR;COCG
-EU;Casablanca Finance City;harmful;;MAR;COCG
-EU;Technological industrial development zone;under_review;;MKD;OECD_FHTP
-EU;Free trade zone;harmful;;MNG;OECD_FHTP
-EU;Freeport Zone;harmful;2018 (doc. 14364/18);MUS;OECD_FHTP
-EU;Manufacturing activities under the Freeport zone regime;harmful;2019 (doc. 13209/19);MUS;COCG
-EU;Labuan Island - International Business and Financial Centre (IBFC);harmful;2019: amended No grandfathering (doc. 9652/19);MYS;OECD_FHTP
-EU;Labuan Island - Financing and Leasing;harmful;2018 (doc. 14364/18);MYS;OECD_FHTP
-EU;Export Processing Zones (EPZ);harmful;;NAM;COCG
-EU;Free Zones Act;not_harmful;;PAN;COCG
-EU;Colon Free Zone;not_harmful;;PAN;COCG
-EU;Panama-Pacifico Special Economic Area;harmful;2019: amended 30/06/2021: end of grandfathering (doc. 9652/19);PAN;OECD_FHTP
-EU;Intellectual Property - City of Knowledge;harmful;2019: amended No grandfathering (doc. 9652/19);PAN;OECD_FHTP
-EU;CETICOS special economic zone;not_harmful;;PER;COCG
-EU;Zofratacna special economic zone;not_harmful;;PER;OECD_FHTP
-EU;Free zone areas;under_review;;QAT;OECD_FHTP
-EU;International Trade Zone (ITZ);harmful;2019: IP part abolished 30/06/2021: end of grandfathering (doc. 9652/19);SYC;OECD_FHTP
-EU;Manufacturing activities in the International Trade Zone;harmful;;SYC;COCG
-EU;Special economic zones;under_review;;SWZ;COCG
-EU;Technology Development Zones;harmful;2018 (doc. 14364/18);TUR;OECD_FHTP
-EU;Free zones;not_harmful;;TUR;OECD_FHTP
-EU;Free trade zone;harmful;;TTO;OECD_FHTP
-EU;Free Trade Zone;harmful;2019 (doc. 7562/19);TWN;COCG
-EU;Free zones;harmful;2019: amended 30/06/2021: end of grandfathering (doc. 9652/19);URY;OECD_FHTP
-EU;Export processing zones;not_harmful;;VNM;COCG
-EU;Industrial Parks/Zones;not_harmful;;VNM;COCG
-EU;Economic Zones;not_harmful;;VNM;COCG
-EU;Special Economic Zones;not_harmful;;ZAF;COCG
+source;regime_name;assessment;comments;iso3c;institution;region
+OECD;Technology development zones regime;harmful;Substance requirements (nexus approach) in place. Grandfathering in accordance with FHTP timelines, except for extension as noted.;TUR;OECD_FHTP;Europe & Central Asia
+OECD;City of knowledge technical zone;harmful;Substance requirements (nexus approach) in place. No grandfathering provided.;PAN;OECD_FHTP;Latin America & Caribbean
+OECD;Aqaba special economic zone;under_review;Regime under review by FHTP.;JOR;OECD_FHTP;Middle East & North Africa
+OECD;Development zone;harmful;Ring-fencing addressed but substantial activities factor implicated;JOR;OECD_FHTP;Middle East & North Africa
+OECD;Special economic zones;harmful;Potentially harmful features will be addressed.;KAZ;OECD_FHTP;Europe & Central Asia
+OECD;Special economic zone;not_harmful;Regime not operational.;KEN;OECD_FHTP;Sub-Saharan Africa
+OECD;Free economic zone taxation regime;not_harmful;Subject to monitoring to ensure continued low risk of BEPS.;LTU;OECD_FHTP;Europe & Central Asia
+OECD;Free trade zones;harmful;No grandfathering provided.;MNG;OECD_FHTP;East Asia & Pacific
+OECD;Free zone at science & technology park;under_review;Regime under review by FHTP.;QAT;OECD_FHTP;Middle East & North Africa
+OECD;Free zone areas;under_review;Regime under review by FHTP.;QAT;OECD_FHTP;Middle East & North Africa
+OECD;International trade zone;harmful;Grandfathering in accordance with FHTP timelines.;SYC;OECD_FHTP;Sub-Saharan Africa
+OECD;Free zones;harmful;Substance requirements (nexus approach) in place. No grandfathering provided.;URY;OECD_FHTP;Latin America & Caribbean
+OECD;Export processing zone;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP;East Asia & Pacific
+OECD;Special provisions in respect of newly established units in special economic zones;not_harmful;No harmful features.;IND;OECD_FHTP;South Asia
+OECD;Special economic zone regime;not_harmful;No benefits for income from geographically mobile activities.;IDN;OECD_FHTP;East Asia & Pacific
+OECD;Special zones for international competitiveness development;not_harmful;No harmful features.;JPN;OECD_FHTP;East Asia & Pacific
+OECD;Special economic zones;not_harmful;Subject to monitoring to ensure continued low risk of BEPS.;LVA;OECD_FHTP;Europe & Central Asia
+OECD;Special economic zone3;not_harmful;Regime not operational.;KEN;OECD_FHTP;Sub-Saharan Africa
+OECD;Astana international financial centre;harmful;Potentially harmful features will be addressed.;KAZ;OECD_FHTP;Europe & Central Asia
+OECD;Labuan leasing;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. No grandfathering provided.;MYS;OECD_FHTP;East Asia & Pacific
+OECD;Casablanca finance city;under_review;Regime under review by FHTP.;MAR;OECD_FHTP;Middle East & North Africa
+OECD;Qatar financial centre (QFC);under_review;Regime under review by FHTP.;QAT;OECD_FHTP;Middle East & North Africa
+OECD;Labuan financial services;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. No grandfathering provided.;MYS;OECD_FHTP;East Asia & Pacific
+OECD;Banks and holding companies in offshore zones;harmful;No grandfathering provided.;MAR;OECD_FHTP;Middle East & North Africa
+OECD;Free trade zones2;not_harmful;Regime not operational.;NGA;OECD_FHTP;Sub-Saharan Africa
+OECD;Free zone;harmful;Potentially harmful features will be addressed.;ABW;OECD_FHTP;Latin America & Caribbean
+OECD;Free trade zone;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. No grandfathering provided.;CRI;OECD_FHTP;Latin America & Caribbean
+OECD;E-Zone;harmful;Benefits for income from geographically mobile activities removed. No grandfathering provided.;CUW;OECD_FHTP;Latin America & Caribbean
+OECD;Free trade zones;under_review;Regime under review by FHTP.;DOM;OECD_FHTP;Latin America & Caribbean
+OECD;Special economic zone;under_review;Regime under review by FHTP.;GAB;OECD_FHTP;Sub-Saharan Africa
+OECD;Free industrial zone;not_harmful;No benefits for income from geographically mobile activities.;GEO;OECD_FHTP;Europe & Central Asia
+OECD;Special economic zones;under_review;Regime under review by FHTP.;JAM;OECD_FHTP;Latin America & Caribbean
+OECD;Aqaba special economic zone;under_review;Regime under review by FHTP.;JOR;OECD_FHTP;Middle East & North Africa
+OECD;Development zones;harmful;"Ring-fencing addressed; substantial activities factor implicated.";JOR;OECD_FHTP;Middle East & North Africa
+OECD;Free trade zones;harmful;No grandfathering provided.;JOR;OECD_FHTP;Middle East & North Africa
+OECD;Special economic zones;harmful;Potentially harmful features will be addressed.;KAZ;OECD_FHTP;Europe & Central Asia
+OECD;Export processing zone;not_harmful;No benefits for income from geographically mobile activities.;KEN;OECD_FHTP;Sub-Saharan Africa
+OECD;Special economic zone1;not_harmful;Regime not operational.;KEN;OECD_FHTP;Sub-Saharan Africa
+OECD;Foreign investment zone;not_harmful;No benefits for income from geographically mobile activities.;KOR;OECD_FHTP;East Asia & Pacific
+OECD;Free economic zone / free trade zone;not_harmful;No benefits for income from geographically mobile activities.;KOR;OECD_FHTP;East Asia & Pacific
+OECD;Free economic zone taxation regime;not_harmful;No harmful features.;LTU;OECD_FHTP;Europe & Central Asia
+OECD;Freeport zone;harmful;Benefits for income from geographically mobile activities removed. Grandfathering in accordance with FHTP timelines.;MUS;OECD_FHTP;Sub-Saharan Africa
+OECD;Free trade zones;harmful;No grandfathering provided.;MNG;OECD_FHTP;East Asia & Pacific
+OECD;Free trade zones;under_review;Regime under review by FHTP.;MAR;OECD_FHTP;Middle East & North Africa
+OECD;Free trade zones2;not_harmful;No benefits for income from geographically mobile activities.;NGA;OECD_FHTP;Sub-Saharan Africa
+OECD;Technological industrial development zone;under_review;Regime under review by FHTP.;MKD;OECD_FHTP;Europe & Central Asia
+OECD;Colon free zone;not_harmful;No benefits for income from geographically mobile activities.;PAN;OECD_FHTP;Latin America & Caribbean
+OECD;Panama-Pacifico special economic zone;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. Grandfathering in accordance with FHTP timelines.;PAN;OECD_FHTP;Latin America & Caribbean
+OECD;Free zone;not_harmful;No benefits for income from geographically mobile activities.;PRY;OECD_FHTP;Latin America & Caribbean
+OECD;Special economic zone 1 (Ceticos / ZED);not_harmful;No benefits for income from geographically mobile activities..;PER;OECD_FHTP;Latin America & Caribbean
+OECD;Special economic zone 2 (Zofratacna);not_harmful;No harmful features.;PER;OECD_FHTP;Latin America & Caribbean
+OECD;Free zone at science & technology park;under_review;Regime under review by FHTP.;QAT;OECD_FHTP;Middle East & North Africa
+OECD;Free zone areas;under_review;Regime under review by FHTP.;QAT;OECD_FHTP;Middle East & North Africa
+OECD;International trade zone;harmful;Benefits for income from geographically mobile activities removed. Grandfathering in accordance with FHTP timelines;SYC;OECD_FHTP;Sub-Saharan Africa
+OECD;Free trade zones;harmful;Regime is being abolished.;TTO;OECD_FHTP;Latin America & Caribbean
+OECD;Free zones;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. Grandfathering in accordance with FHTP timelines.;URY;OECD_FHTP;Latin America & Caribbean
+OECD;Economic zones;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP;East Asia & Pacific
+OECD;Export processing zone;not_harmful;No benefits for income from activities.;VNM;OECD_FHTP;East Asia & Pacific
+OECD;Industrial parks/zones;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP;East Asia & Pacific
+OECD;International business centre;harmful;Benefits for income from geographically mobile activities removed. No grandfathering provided.;CPV;OECD_FHTP;Sub-Saharan Africa
+EU;Employment and (T) Zones;not_harmful;;BEL;COCG;Europe & Central Asia
+EU;Enterprise Zones;not_harmful;;DNK;COCG;Europe & Central Asia
+EU;Tax Free Zones - ZFU;not_harmful;;FRA;COCG;Europe & Central Asia
+EU;Enterprise Zones;not_harmful;;FRA;COCG;Europe & Central Asia
+EU;Nord-Pas-de-Calais - Privileged Investment Zone;not_harmful;;FRA;COCG;Europe & Central Asia
+EU;Free Zones Act;not_harmful;;HRV;COCG;Europe & Central Asia
+EU;Shannon Airport Zone (SAZ);harmful;2002: phase out (doc. 8848/02) 2006: end of grandfathering (doc. 14812/02);IRL;COCG;Europe & Central Asia
+EU;Trieste Financial Services and Insurance centre;harmful;2003 (doc. 14812/02);ITA;COCG;Europe & Central Asia
+EU;Free Economic Zones;harmful;2004: abolished 2017: end of grandfathering (doc. 13213/03);LTU;COCG;Europe & Central Asia
+EU;Special tax zones;not_harmful;;LTU;COCG;Europe & Central Asia
+EU;Review of the corporate income tax regime for special tax zones;under_review;;LTU;COCG;Europe & Central Asia
+EU;Special Economic Zones and Free Ports;harmful;2004 (doc. 13213/03);LVA;COCG;Europe & Central Asia
+EU;Special Economic Zones (original rules);harmful;2011: end of grandfathering (doc. 10857/11);POL;COCG;Europe & Central Asia
+EU;Special Economic Zones (amended rules);harmful;2006;POL;COCG;Europe & Central Asia
+EU;Special Economic Zones (amended rules);under_review;;POL;COCG;Europe & Central Asia
+EU;Polish Investment Zone (PIZ);harmful;;POL;COCG;Europe & Central Asia
+EU;Madeira and Sta Maria (Azores) Free Zones;harmful;2003: abolished (doc. 7018/1/03) 2012: end of grandfathering (doc. 10903/12);PRT;COCG;Europe & Central Asia
+EU;Industrial Free Zones;not_harmful;;PRT;COCG;Europe & Central Asia
+EU;Madeira Free Zones;under_review;;PRT;COCG;Europe & Central Asia
+EU;Free zones;harmful;2002: abolished 2012: end of grandfathering;ROU;COCG;Europe & Central Asia
+EU;Special Economic Zones;not_harmful;;SVN;COCG;Europe & Central Asia
+EU;Amendments to the Economic Zones Act;under_review;;SVN;COCG;Europe & Central Asia
+EU;Amendments to the Economic Zones Act;under_review;;SVN;COCG;Europe & Central Asia
+EU;Enterprises Zones;not_harmful;;GBR;COCG;Europe & Central Asia
+EU;Free zones;harmful;2006 (doc. 9655/06);BES;COCG;NA
+EU;Free zones;harmful;2006 (doc. 7018/1/03;ABW;COCG;Latin America & Caribbean
+EU;Free Zone;under_review;;ABW;OECD_FHTP;Latin America & Caribbean
+EU;Special zone San Nicolas;harmful;2018 (doc. 7518/19);ABW;COCG;Latin America & Caribbean
+EU;eZone;harmful;2018 (doc. 14364/18);CUW;OECD_FHTP;Latin America & Caribbean
+EU;Manufacturing activities under the eZone regime;harmful;;CUW;COCG;Latin America & Caribbean
+EU;Free Zones;under_review;;ARE;COCG;Middle East & North Africa
+EU;Free Trade Zones (Paradise Found Act, Yida Act, Free Trade Zone Act, Special Economic Zone Act);harmful;;ATG;COCG;Latin America & Caribbean
+EU;Export Processing Zone;not_harmful;;BRA;COCG;Latin America & Caribbean
+EU;Export processing zones (EPZ) enterprises;harmful;2019 (doc. 7615/19 + ADDs 1-2);BLZ;COCG;Latin America & Caribbean
+EU;Commercial free zone (CFZ);not_harmful;;BLZ;COCG;Latin America & Caribbean
+EU;Free Zones;harmful;2019 (doc. 13207/19);CRI;OECD_FHTP;Latin America & Caribbean
+EU;Manufacturing activities under the amended Free Zones regime;harmful;2019 (doc. 13207/19);CRI;COCG;Latin America & Caribbean
+EU;Export processing / commercial free zones enterprises;not_harmful;;GRD;COCG;Latin America & Caribbean
+EU;Free industrial zones (FIZ);not_harmful;;GEO;COCG;Europe & Central Asia
+EU;Special economic zone;not_harmful;;IDN;OECD_FHTP;East Asia & Pacific
+EU;Special Economic Zones (SEZS);not_harmful;;IND;OECD_FHTP;South Asia
+EU;Special Economic Zones;not_harmful;;JAM;COCG;Latin America & Caribbean
+EU;Free Zone;harmful;2019 (docs. 7517/19 and 9652/19);JOR;OECD FHTP + COCG;Middle East & North Africa
+EU;Development Zone;harmful;;JOR;OECD_FHTP;Middle East & North Africa
+EU;Least Developed Zones;not_harmful;;JOR;COCG;Middle East & North Africa
+EU;Aqaba Special Economic Zone;under_review;;JOR;OECD_FHTP;Middle East & North Africa
+EU;Foreign investment Zone (FIZ);harmful;2019 (doc. 7523/19);KOR;COCG;East Asia & Pacific
+EU;Free Trade / Economic Zones (FTEZ);harmful;2019 (doc. 7524/19);KOR;COCG;East Asia & Pacific
+EU;Free trade Zones;harmful;2019 (doc. 7546/19 + ADD 1);LCA;COCG;Latin America & Caribbean
+EU;Export Free Zones (EFZ) or Free Trade Zones (FTZ);harmful;;MAR;COCG;Middle East & North Africa
+EU;Casablanca Finance City;harmful;;MAR;COCG;Middle East & North Africa
+EU;Technological industrial development zone;under_review;;MKD;OECD_FHTP;Europe & Central Asia
+EU;Free trade zone;harmful;;MNG;OECD_FHTP;East Asia & Pacific
+EU;Freeport Zone;harmful;2018 (doc. 14364/18);MUS;OECD_FHTP;Sub-Saharan Africa
+EU;Manufacturing activities under the Freeport zone regime;harmful;2019 (doc. 13209/19);MUS;COCG;Sub-Saharan Africa
+EU;Labuan Island - International Business and Financial Centre (IBFC);harmful;2019: amended No grandfathering (doc. 9652/19);MYS;OECD_FHTP;East Asia & Pacific
+EU;Labuan Island - Financing and Leasing;harmful;2018 (doc. 14364/18);MYS;OECD_FHTP;East Asia & Pacific
+EU;Export Processing Zones (EPZ);harmful;;NAM;COCG;Sub-Saharan Africa
+EU;Free Zones Act;not_harmful;;PAN;COCG;Latin America & Caribbean
+EU;Colon Free Zone;not_harmful;;PAN;COCG;Latin America & Caribbean
+EU;Panama-Pacifico Special Economic Area;harmful;2019: amended 30/06/2021: end of grandfathering (doc. 9652/19);PAN;OECD_FHTP;Latin America & Caribbean
+EU;Intellectual Property - City of Knowledge;harmful;2019: amended No grandfathering (doc. 9652/19);PAN;OECD_FHTP;Latin America & Caribbean
+EU;CETICOS special economic zone;not_harmful;;PER;COCG;Latin America & Caribbean
+EU;Zofratacna special economic zone;not_harmful;;PER;OECD_FHTP;Latin America & Caribbean
+EU;Free zone areas;under_review;;QAT;OECD_FHTP;Middle East & North Africa
+EU;International Trade Zone (ITZ);harmful;2019: IP part abolished 30/06/2021: end of grandfathering (doc. 9652/19);SYC;OECD_FHTP;Sub-Saharan Africa
+EU;Manufacturing activities in the International Trade Zone;harmful;;SYC;COCG;Sub-Saharan Africa
+EU;Special economic zones;under_review;;SWZ;COCG;Sub-Saharan Africa
+EU;Technology Development Zones;harmful;2018 (doc. 14364/18);TUR;OECD_FHTP;Europe & Central Asia
+EU;Free zones;not_harmful;;TUR;OECD_FHTP;Europe & Central Asia
+EU;Free trade zone;harmful;;TTO;OECD_FHTP;Latin America & Caribbean
+EU;Free Trade Zone;harmful;2019 (doc. 7562/19);TWN;COCG;East Asia & Pacific
+EU;Free zones;harmful;2019: amended 30/06/2021: end of grandfathering (doc. 9652/19);URY;OECD_FHTP;Latin America & Caribbean
+EU;Export processing zones;not_harmful;;VNM;COCG;East Asia & Pacific
+EU;Industrial Parks/Zones;not_harmful;;VNM;COCG;East Asia & Pacific
+EU;Economic Zones;not_harmful;;VNM;COCG;East Asia & Pacific
+EU;Special Economic Zones;not_harmful;;ZAF;COCG;Sub-Saharan Africa

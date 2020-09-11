@@ -25,7 +25,6 @@ if (!require('pdftools')) install.packages('pdftools'); library('pdftools')
 if (!require('tabulizer')) install.packages('tabulizer'); library('tabulizer') 
 if (!require('rJava')) install.packages('rJava'); library('rJava')
 if (!require('countrycode')) install.packages('countrycode'); library('countrycode')
-if (!require('circlize')) install.packages('circlize'); library('circlize')
 ```
 
 The analysis proceeds in four steps:
@@ -38,10 +37,10 @@ In a first step, the geographical scope of the analysis is determined. Since the
 
 ```{r countries included}
 
-lac_countries <- read_excel("data_raw/CLASS.xls", skip=4)
-lac_countries %<>%  rename(country = Economy, iso3c=Code, region=Region)
-lac_countries %<>% filter(region=="Latin America & Caribbean") %>% select(country,iso3c)
-print(nrow(lac_countries))
+wb <- read_excel("data_raw/CLASS.xls", skip=4)
+wb %<>%  rename(country = Economy, iso3c=Code, region=Region)
+lac_countries <- wb %>% filter(region=="Latin America & Caribbean") %>% select(country,iso3c)
+nrow(lac_countries)
 
 ```
 countries.
@@ -274,18 +273,22 @@ regimes_sez$assessment %<>% fct_collapse("harmful" =
                                              "",
                                              "Not currently harmful (not yet operational), but annual monitoring" ))
 
-regimes_sez$institution  %<>%    recode("OECD FHTP" = "OECD_FHTP")
+regimes_sez$institution %<>% recode("OECD FHTP" = "OECD_FHTP")
+
+regimes_sez <- left_join(regimes_sez, wb[c("iso3c", "region")], by="iso3c")
 
 write_csv2(regimes_sez, "data_created/regimes_sez_combined.csv")
 saveRDS(regimes_sez, "data_created/regimes_sez_combined.rds")
 
-regimes_sez_ctry <- regimes_sez %>% pivot_wider(id_cols=c("iso3c", "institution"), names_from=c("assessment", "institution"), values_from="regime_name", values_fn=list(assessment_n=median))
+regimes_sez %>% filter(region=="Latin America & Caribbean") %>% arrange(iso3c) %>%  kable %>% kable_styling()
 
+regimes_sez %>% filter(region=="Latin America & Caribbean") %>% nrow
+
+
+regimes_sez_ctry <- regimes_sez %>% pivot_wider(id_cols=c("iso3c", "institution"), names_from=c("assessment", "institution"), values_from="regime_name")
 
 regimes_sez_ctry %<>%   add_column(harmfulregimes_found = NA)%<>% mutate(harmfulregimes_found= case_when(harmful_COCG=="NULL"&harmful_OECD_FHTP=="NULL"~"no", TRUE~"yes" ))
 regimes_sez_ctry %<>% add_column(regime_assessed = "yes")
-
-
 
 lac_sez <- left_join(lac_sez, regimes_sez_ctry[c("iso3c","harmful_COCG", "harmful_OECD_FHTP", "harmfulregimes_found","regime_assessed")])
 lac_sez %<>% mutate(regime_assessed = str_replace_na(regime_assessed, "no"))
@@ -297,18 +300,5 @@ source("C:/Users/Frederik/surfdrive/RScripts/extracting Inclusive Framework juri
 complete <- left_join(complete, incframe[c("iso3c","Membership")])
 complete %>% filter(is.na(Membership)) %>% nrow
 
-write.csv2(arrange(complete[c("Country", "Harmful_COCG", "Harmful_OECD_FHTP", "Regimeassessed", "Harmfulregimesfound")], Harmfulregimesfound), "C:/Users/Frederik/surfdrive/RScripts/SEZs/complete.csv", fileEncoding="latin1")
-```
-
-
-```{r select Latin American}
-
-harmfulregimes <- left_join(harmfulregimes, wb[c("iso3c", "region")], by="iso3c")
-
-LACzones <- filter(zonesassessed, region=="Latin America & Caribbean")
-kable(arrange(LACzones[1:5], Country)) %>%   kable_styling()
-write.csv2(arrange(LACzones, Country), "C:/Users/Frederik/surfdrive/RScripts/SEZs/LACzones.csv", fileEncoding="latin1")
 
 ```
-
-
