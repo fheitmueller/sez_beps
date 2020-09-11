@@ -1,32 +1,90 @@
----
-title: "data preparation"
-author: "Frederik Heitmüller"
-date: "8 September 2020"
-output: github_document
----
+data preparation
+================
+Frederik Heitmüller
+8 September 2020
 
-```{r setup, include=TRUE}
+``` r
 knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 if (!require('XML')) install.packages('XML'); library('XML') 
-if (!require('pdftools')) install.packages('pdftools'); library('pdftools') 
-if (!require('tabulizer')) install.packages('tabulizer'); library('tabulizer') 
-if (!require('rJava')) install.packages('rJava'); library('rJava')
-if (!require('tidyverse')) install.packages('tidyverse'); library('tidyverse')
-if (!require('magrittr')) install.packages('magrittr'); library('magrittr')
-if (!require('countrycode')) install.packages('countrycode'); library('countrycode')
-if (!require('rlist')) install.packages('rlist'); library('rlist') 
-
 ```
 
-# Content
+    ## Loading required package: XML
+
+``` r
+if (!require('pdftools')) install.packages('pdftools'); library('pdftools') 
+```
+
+    ## Loading required package: pdftools
+
+    ## Using poppler version 0.73.0
+
+``` r
+if (!require('tabulizer')) install.packages('tabulizer'); library('tabulizer') 
+```
+
+    ## Loading required package: tabulizer
+
+``` r
+if (!require('rJava')) install.packages('rJava'); library('rJava')
+```
+
+    ## Loading required package: rJava
+
+``` r
+if (!require('tidyverse')) install.packages('tidyverse'); library('tidyverse')
+```
+
+    ## Loading required package: tidyverse
+
+    ## -- Attaching packages ----------------------------------------------------------- tidyverse 1.3.0 --
+
+    ## v ggplot2 3.3.2     v purrr   0.3.4
+    ## v tibble  3.0.3     v dplyr   1.0.2
+    ## v tidyr   1.1.2     v stringr 1.4.0
+    ## v readr   1.3.1     v forcats 0.5.0
+
+    ## -- Conflicts -------------------------------------------------------------- tidyverse_conflicts() --
+    ## x dplyr::filter() masks stats::filter()
+    ## x dplyr::lag()    masks stats::lag()
+
+``` r
+if (!require('magrittr')) install.packages('magrittr'); library('magrittr')
+```
+
+    ## Loading required package: magrittr
+
+    ## 
+    ## Attaching package: 'magrittr'
+
+    ## The following object is masked from 'package:purrr':
+    ## 
+    ##     set_names
+
+    ## The following object is masked from 'package:tidyr':
+    ## 
+    ##     extract
+
+``` r
+if (!require('countrycode')) install.packages('countrycode'); library('countrycode')
+```
+
+    ## Loading required package: countrycode
+
+``` r
+if (!require('rlist')) install.packages('rlist'); library('rlist') 
+```
+
+    ## Loading required package: rlist
+
+Content
+=======
 
 This file contains the major data operation carried out to clean and transform the files used in the SEZ project.
 
+tax rate data from CIAT and KPMG
+================================
 
-#tax rate data from CIAT and KPMG
-
-```{r combine with tax data}
-
+``` r
 ciat_rates <- read_delim("data_raw/IRPJ_Alicuotas_Maximas.csv", delim=";",skip=3, skip_empty_rows = TRUE, na=c("","n.d.","-"))
 ciat_rates <- ciat_rates[-(19:1790),-(41:166)]
 ciat_rates %<>% rename(country = X1)
@@ -45,23 +103,16 @@ kpmg_rates <- countrycustommatch::countrymatch_w_list(df=kpmg_rates, columnname=
 
 write_csv2(kpmg_rates, "data_prepared/kpmg_rates_clean.csv")
 saveRDS(kpmg_rates, "data_prepared/kpmg_rates_clean.rds")
-
-
-
-
 ```
 
-# BEPS Action 5 report
-All data with regards to preferential regimes is taken from http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf
+BEPS Action 5 report
+====================
 
-```{r pressure, echo=FALSE}
-#First, obtain this data from the relevant website and store link as variable
-file <- "http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf"
+All data with regards to preferential regimes is taken from <http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf>
 
-```
 Next the pdf is parsed with the help of the R package "pdftools" and "tabulizer". For this purpose coordinates of the tables are manually selected and stored.
 
-```{r setting the page vectors}
+``` r
 #Next step is to define the relevant pages in the pdf documents. Here, the different tables, based on different types of regimes are stored in separate variables. Afterwards they are included in a list which can be called in a loop. page 9 must be called twice, because there is a break in the table, pay attention to not take the headers with you.
 
 p1 <- c(1,2)
@@ -76,11 +127,9 @@ p9 <- c(17)
 p10 <- c(18)
 p11 <- c(18,19)
 pageslist <- list(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11)
-
 ```
 
-```{r manually selecting tables, eval=FALSE }
-
+``` r
 ##The next step is manual and requires selecting the relevant areas to be selected in the pdfs. This is necessary because in this specific pdf document, the automatic selection from the pdftools package does not work satisfactorily. At the end the created list is saved, so that in further runs the manual procedure does not need to be undertaken again.
 
 for (i in 1:11){
@@ -90,15 +139,17 @@ for (i in 1:11){
   }
 arealist<-list(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)
 list.save(arealist, file="arealist.RData")  ##start from here to avoid the selection again
-
 ```
-```{r loading arealist}
+
+``` r
 ##With the subsequent command the saved arealist can be loaded
 
 arealist <- list.load("data_created/arealist.RData")
 ```
+
 The next step is to create list of all regime types that can later on be added as additional column.
-```{r storing regime names}
+
+``` r
 t1 <- "low-tax jurisdiction"
 t2 <- "IP regime"
 t3 <- "first report non-IP"
@@ -111,10 +162,11 @@ t9 <- "holding"
 t10 <- "fund management"
 t11 <- "miscalleneous"
 typelist <- list(t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11)
-
 ```
+
 Subsequently, several datacleaning operations are undertaken to create one big table including all regimes. The regime type is added as additional column.
-```{r putting the tables together for each one of the subparts of the table}
+
+``` r
 ###The following chunk is a loop which extracts the table, transforms them where necessary and puts them together in one big table.
 
 ## this part calls for each of the combination of pages
@@ -142,8 +194,9 @@ ext_list<-list(ext1,ext2,ext3,ext4,ext5,ext6,ext7,ext8,ext9,ext10,ext11)
 beps_regimes <- do.call(rbind, ext_list)
 ```
 
-Next the data is tidied in order to make it usable for analysis. The first column containing only numbers is taken out, trailing and leading spaces are removed and there is a loop to take numbers stemming from footnotes out. In Switzerland, several regimes are situated by subnational entities. As later on, analysis will only be carried out at national level, the cantonal names are removed and all data is analyzed on the national level. 
-```{r tidying the data and adding countrycodes}
+Next the data is tidied in order to make it usable for analysis. The first column containing only numbers is taken out, trailing and leading spaces are removed and there is a loop to take numbers stemming from footnotes out. In Switzerland, several regimes are situated by subnational entities. As later on, analysis will only be carried out at national level, the cantonal names are removed and all data is analyzed on the national level. 2 regimes that are amended are reported as having a harmful feature, namely the permmission of new entrants for some months longer than mandated by the OECD.For 2 regimes that are potentially harmful but not actually harmful, a date in the future at which the regime is abolished. These pieces of information are removed, as considered of minor importance.
+
+``` r
 ##tidying the data
 beps_regimes <- beps_regimes[-1]
 beps_regimes <- mutate_all(beps_regimes, str_trim)
@@ -157,17 +210,14 @@ beps_regimes$iso3c[124:128] <- "CHE"
 
 write_csv2(beps_regimes, "data_prepared/beps_regimes_clean.csv")
 saveRDS(beps_regimes, "data_prepared/beps_regimes_clean.rds")
-
 ```
 
-
-# EU Code of Conduct
+EU Code of Conduct
+==================
 
 Data regarding the work of the EU Code of Conduct Group can be obtained from the website of the European Council under <https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf>.
 
-
-```{r Code of Conduct}
-
+``` r
 file <- "https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf"
 
 out <- extract_tables(file, pages = c(4:95), columns=list(c(5, 10, 20, 30)), method = "stream", encoding="UTF-8", output="matrix")
