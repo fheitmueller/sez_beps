@@ -1,5 +1,7 @@
 country;iso3c;sez_rate;maximum_time;alternative_rate;sez_rate_source;note;no_diff_regimes
-Antigua and Barbuda;ATG;0;Permanent;;http://zone.gov.ag/investments/;"""Exempted from the payment of taxes of any kind on the repatriation of profits earned in the Free Trade and Processing Zone.""";1
+Antigua and Barbuda;ATG;0;Permanent;;http://zone.gov.ag/investments/;"""Exempted from the payment of income and other taxes of any kind other than Social Security payments and Medical Benefits
+contributions and the Education Levy on the earnings accruing to any person by virtue of employment in any industrial or
+commercial activity within the Free Trade and Processing Zone."" ""Exempted from the payment of taxes of any kind on the repatriation of profits earned in the Free Trade and Processing Zone.""";1
 Argentina;ARG;41.5;Permanent;;http://www.afip.gob.ar/zonasFrancas/#ver;"""Será aplicable la totalidad de las disposiciones de carácter impositivo, aduanero y financiero, incluidas las de carácter penal que rigen en el territorio aduanero general, salvo las excepciones establecidas en el artículo 590 del Código Aduanero""";1
 Aruba;ABW;2;Permanent;;IBFD Country Tax Guide 2019;;1
 Barbados;BRB;NA;NA;;;;NA
@@ -48,4 +50,4 @@ Uruguay;URY;0;Permanent;;https://www.mef.gub.uy/1064/4/areas/beneficios-tributar
 St. Vincent and the Grenadines;VCT;NA;NA;;;;
 Venezuela, RB;VEN;0;10;;IBFD Country Tax Guide;;1
 British Virgin Islands;VGB;NA;NA;;;;NA
-Virgin Islands (U.S.);VIR;NA;NA;;;Progressive rates from 15% to up to 35% apply. In addition, a surtax applies depending on total tax liability;NA
+Virgin Islands (U.S.);VIR;NA;NA;;;;NA

@@ -7,6 +7,9 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+if (!require('haven')) install.packages('haven'); library('haven') 
+if (!require('tidyverse')) install.packages('tidyverse'); library('tidyverse') 
+
 ```
 
 #Content
@@ -55,5 +58,24 @@ circos.track(factors=complete$iso3c, ylim=c(0,10),     panel.fun = function(x, y
 circos.text(CELL_META$xcenter, CELL_META$ylim[2]+9,"SEZ exist", sector.index = "PRY", track.index=3, facing="bending.inside", cex=0.7)    
 
 circos.clear()
+
+```
+
+The World Bank published a "Developing Country Tax Incentives database", available at: <https://www.worldbank.org/en/topic/competitiveness/publication/global-investment-competitiveness-report> (accessed on 24 september 2020)
+
+The data provides data on the tax rate for each sector and presents the standard CIT rate, an unconditional concessional rate and a concessional rate dependent on location. To find out potential SEZ incentives, it is therefore necessary to look for data entries where the concessional rate dependent on location is different from the standard rate.
+
+
+```{r WB tax incentives}
+
+wb_inc <- read_dta("data_raw/WBG_incentivesdatabase/2_incentives_database.dta")
+wb_inc <- countrycustommatch::countrymatch_w_list(wb_inc, "country")
+columnname <- "country"
+all_lat_cov <- wb_inc %>% filter(region =="Latin America and Caribbean") %>% distinct(country)
+wb_inc %<>% filter(holiday_l!=holiday_u | allowance_l!=allowance_u | concession_l!=concession_u)
+wb_inc %<>% filter(region =="Latin America and Caribbean")
+countries <- distinct(wb_inc, country)
+countries %<>% add_column(sez_incentive ="Yes")
+countries <- left_join(all_lat_cov, countries)
 
 ```
