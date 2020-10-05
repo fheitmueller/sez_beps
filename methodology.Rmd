@@ -1,7 +1,7 @@
 ---
 title: "SEZ, BEPS Action 5, EU Code of Conduct - Methodology"
 author: "Frederik Heitmüller"
-date: "25 September 2020"
+date: "5 October 2020"
 output: html_document
 ---
 
@@ -22,15 +22,17 @@ if (!require('ggpubr')) install.packages('ggpubr'); library('ggpubr')
 if (!require('countrycode')) install.packages('countrycode'); library('countrycode')
 if (!require('ggpattern')) remotes::install_github("coolbutuseless/ggpattern"); library('ggpattern')
 library(lubridate)
+if (!require('tmap')) install.packages('tmap'); library('tmap')
+if (!require('patchwork')) install.packages('patchwork'); library('patchwork')
 
 
 ```
 
 The analysis proceeds in four steps:
-- determining countries in scope of analysis
-- using UNCTAD data to assess prevalence of special economic zones per country
-- Analysing the corporate tax benefits of SEZs in Latin America and the Caribbean
-- Assessing the impact 
+* Determining countries in scope of analysis
+* Using UNCTAD data to assess prevalence of special economic zones per country
+* Analysing the corporate tax benefits of SEZs in Latin America and the Caribbean
+* Assessing the impact of the FHTP's and the EU Code of Conduct Group's reviews on SEZs in Latin America
 
 In a first step, the geographical scope of the analysis is determined. Since the article deals principally with the Latin American region, all countries and jurisdiction belonging to the region "Latin America & Caribbean" according to the World Bank's classification are included. Countries and their regional classification are obtained from: <http://databank.worldbank.org/data/download/site-content/CLASS.xls>, Accessed on 20 July 2020.The sample includes 
 
@@ -44,51 +46,38 @@ nrow(lac_countries)
 ```
 countries.
 In a next step, data on the prevalence of SEZs is added from the UNCTAD World Investment report. The dataset was downloaded on June 16 2020 from <https://unctad.org/Sections/dite_dir/docs/WIR2019/WIR19_tab21.xlsx>. 
-It is unclear from the dataset whether cells containing ".." are zero values or missing values (in the sense that no information could be obtained). However, since some cells contain zero values, ".." will be treated as missing.
 ```{r UNCTAD SEZ data, results=FALSE}
 
-unctad <- read_csv2("data_raw/WIR19_tab21.csv",skip=2, col_names=TRUE)
-unctad  %<>%  rename(country = Economya) 
-unctad %<>% drop_na(country)
-unctad[178,1]<-"Jamaica"
-unctad[207,1]<-"Turkmenistan"
-unctad[104,1]<-"Bhutan"
-unctad <- countrycustommatch::countrymatch_w_list(df=unctad, columnname="country")
+unctad <- readRDS("data_prepared/unctad_sez.rds")
 
-lac_sez <- left_join(lac_countries, unctad[c("iso3c", "Number of SEZs (established by law)","Number of single-enterprise zones (\"free points\")","Year of the first promulgation of lawc")], by="iso3c")
-lac_sez  %<>%  rename(sez_no = "Number of SEZs (established by law)", fp_no ="Number of single-enterprise zones (\"free points\")", first_y= "Year of the first promulgation of lawc") 
-lac_sez %<>% mutate_at(vars(sez_no,fp_no),as.numeric)
-lac_sez %<>% mutate_at(vars(first_y), as.integer)
+lac_sez <- left_join(lac_countries, unctad[c("iso3c", "sez_no","fp_no","first_y")], by="iso3c")
+
 ```
-A number of countries (mostly Carribean island states) are not included in the UNCTAD dataset. These are
+A number of countries (mostly Carribean island states) are not included in the UNCTAD dataset or are presented as missing values. These are the following:
 ```{r print missings}
 lac_sez %>% filter(is.na(sez_no)) %>% pull(country) %>% print
 ```
-In addition, those marked as missing values in the UNCTAD dataset are
-```{r other missings}
-lac_sez %>% filter(sez_no=="..") %>% pull(country) %>% print
-lac_sez %<>% mutate_if(is.character, list(~na_if(., "..")))
-```
+
 For the purpose of this analysis, it is assumed that these countries do not have SEZs.
-The total number of SEZs in Latin America and the Caribbean is:
+The total number of SEZs in Latin America and the Caribbean is then:
 ```{r number of SEZs in LAC}
 sum(lac_sez$sez_no, na.rm=TRUE) %>% print
 ```
-These are distributed across
+These are distributed across 29 countries countries.
 ```{r number of countries with SEZs}
 lac_sez %>% filter(sez_no > 0) %>% nrow() %>% print
 ```
-countries.
 
-##Analysis of tax benefits
-The next step consists in adding data that is relevant to assess the kind of tax-benefit available. 
 
-###Data on "normal" tax regime
-Data on the "normal" tax regime in the rest of the country is downloaded from Centro Inter-Americano de Administración Tributaria (CIAT). CIAT provides time series data on "general" tax rates and and "maximum" tax rates. Since "general" excludes surcharges which are generally payable, the "maximum" rates are used. The difference of the SEZ regime from the rest of the country should therefore be regarded as the maximum benefit. Data was downloaded from <https://ciatorg.sharepoint.com/sites/cds/_layouts/15/guestaccess.aspx?docid=0b55688f22c7f4f3c9af47402923b8128&authkey=AflZ26auh2fOQoTW5EHzhfI&e=356a6a32ce38454f94eba7398c54cfca> on 16 June 2020. 
+## Analysis of tax benefits
+The next step consists in adding data that is relevant to assess the kind of tax-benefit that the different SEZ regimes offer. For that purpose, both data on the "normal" tax regime applicable in the country to companies outside SEZs, as well as on the tax regime applicable in the SEZ is collected.
+
+### Data on "normal" tax regime
+Data on the "normal" tax regime in the rest of the country is downloaded from Centro Inter-Americano de Administración Tributaria (CIAT). CIAT provides time series data on "general" tax rates and and "maximum" tax rates. Since "general" excludes surcharges which are generally payable, the "maximum" rates are used. The difference of the SEZ regime from the rest of the country should therefore be regarded as the maximum benefit. Data was downloaded from the CIAT website: <https://ciatorg.sharepoint.com/sites/cds/_layouts/15/guestaccess.aspx?docid=0b55688f22c7f4f3c9af47402923b8128&authkey=AflZ26auh2fOQoTW5EHzhfI&e=356a6a32ce38454f94eba7398c54cfca> on 16 June 2020. 
 For jurisdictions where CIAT data was not available, data from KPMG was used. It was downloaded from <https://home.kpmg/xx/en/home/services/tax/tax-tools-and-resources/tax-rates-online/corporate-tax-rates-table.html> on 22 June 2020.
-Finally, tax rates for jurisdictions available in neither database were searched in the IBFD Country Tax Guides.
-Data was cleaned and country codes added (see separate document).
-In the next step, a table was prepared where missing values for generally applicable tax rates were replaced. Rates were manually searched from IBFD Country Tax Guides and official websites of the country in question. 
+Finally, tax rates for jurisdictions available in neither database were searched in the IBFD Country Tax Guides and on official websites of the country in question.
+Data was cleaned and country codes added (see separate document on data preparation).
+In the next step, a table was prepared where missing values for generally applicable tax rates were replaced.
 
 ```{r classifying countries}
 
@@ -105,12 +94,9 @@ lac_sez <- left_join(lac_sez,add_rates[c("additional_rate", "iso3c")])
 ## creating one vector with all generally applicable income tax rates. Privilege is given first to CIAT, then KPMG, then manual
 lac_sez %<>% mutate(cdt_rate=coalesce(ciat_rate_2018, kpmg_rate_2018, additional_rate))
 
-## create a table
-
-
 ```
 
-###Data on the SEZ benefit
+### Data on the SEZ benefit
 Afterwards, a database of applicable tax benefits in the countries' SEZ was compiled manually.
 In general, countries provide either for a full exemption, a fixed reduced rate (eg. 5%), or a reduction of the full tax rate (eg. 75%). There is an important difference between the latter two kinds of benefits:
 Consider two countries A and B. Both have tax benefits in SEZs. In year 1, the generally applicable tax rate in both countries is 20%. The SEZ benefit in country A is a fixed rate of 5%. The SEZ benefit in country B is a 75% reduction of the full tax rate, which is equivalent to 5%. In year 2, both countries increase their general tax rates to 30%. In country A, the tax rate in SEZs will still be 5%. However, in country B, it will have increased to 7.5% (a 75% reduction from 30%).
@@ -123,9 +109,9 @@ In the future this dataset might be updated to include more data years.
 ```{r new rate dataset}
 sez_rates <- read_delim("data_created/sez_rates2.csv", delim=";", col_names=TRUE)
 lac_sez <- full_join(lac_sez, sez_rates, by="iso3c")
-lac_sez %<>% filter(sez_or_disad_area!="disad_area")
+lac_sez %<>% filter(is.na(sez_or_disad_area)|sez_or_disad_area!="disad_area")
 lac_sez <- unique(lac_sez)
-# sez rate is coerced to double, remember that the row where sez_rate_cdt NA is Paraguay with "Other incentive (gross)"
+# sez rate is coerced to double, remember that the row where sez_rate_cdt NA is #Paraguay with "Other incentive (gross)"
 lac_sez %<>% mutate(sez_rate_cdt = coalesce(as.double(sez_rate), cdt_rate*perc_of_gen_CIT))
 lac_sez %<>% mutate(sez_perc_cdt = coalesce(perc_of_gen_CIT, as.double(sez_rate)/cdt_rate))
 lac_sez$sez_no <- replace_na(lac_sez$sez_no, 0)
@@ -138,30 +124,50 @@ lac_sez %<>% mutate(holiday_dummy_pattern = case_when(holiday_dummy== "Yes"~"str
 cl <- c("Full exemption or long tax holiday", "Short tax holiday (10y or less)", "Important reduction (more than 50%)", "Moderate reduction (50% or less)", "Other tax benefit (gross)", "No benefit", "Jurisdiction without CIT", "No SEZs")
 
 
-lac_sez %<>% mutate(category = case_when(sez_no==0~cl[8], cdt_rate==0~cl[7], is.na(sez_rate_cdt)~cl[5], holiday_time<11~cl[2],sez_rate_cdt==0|holiday_time>10~cl[1], sez_perc_cdt==1~cl[6], sez_perc_cdt<0.5~cl[3], sez_perc_cdt>=0.5~cl[4])) 
+lac_sez %<>% mutate(category = case_when(sez_no==0~cl[8], cdt_rate==0~cl[7], is.na(sez_rate_cdt)~cl[5],sez_rate_cdt==0|holiday_time>10~cl[1], holiday_time>0&holiday_time<11~cl[2], sez_perc_cdt==1~cl[6], sez_perc_cdt<0.5~cl[3], sez_perc_cdt>=0.5~cl[4])) 
 lac_sez$category <- ordered(as.factor(lac_sez$category), levels=cl)
 
 
 # creating regime_id for non-existing regimes
 lac_sez %<>% mutate_at(.vars="regime_id", coalesce, lac_sez$regime_id, lac_sez$iso3c)
 # selecting the most recent year
-lac_sez_rec <- lac_sez %>% group_by(iso3c, regime_id) %>% slice_max(year) %>% ungroup
+lac_sez_rec <- lac_sez %>% group_by(regime_id) %>% slice_max(year) %>% ungroup
+lac_sez_rec %<>% add_count(iso3c)
+lac_sez_rec  %<>% mutate(composite = case_when(n>1~paste0(country.x, " (", regime_name,")"), TRUE~country.x))
 # selecting the most favourable benefit for each jurisidiction, and the first in the table in case benefits are equal
-lac_sez_rec_cds <- lac_sez_rec %<>% group_by(iso3c) %>% slice_min(category) %>% ungroup
+lac_sez_rec_cds <- lac_sez_rec %>% group_by(iso3c) %>% slice_min(category) %>% ungroup
 lac_sez_rec_cds %<>% group_by(iso3c) %>% slice_head %>% ungroup
 
-lac_sez_rec %>% select(category,country.x) %>% group_by(category) %>% group_nest() %>% kable() 
-
+lac_sez_rec %>% select(category,composite) %>% group_by(category) %>% group_nest() %>% kable() %>% kable_styling() 
 
 ```
 
-
-```{r analysis prevalence}
-
+```{r new map}
 world <- ne_countries(scale = "medium", returnclass = "sf")
 world %<>% rename(iso3c = iso_a3)
 world <- left_join(world, lac_sez_rec_cds, by=c("iso3c"))
 world_lac <- filter(world, region_wb == "Latin America & Caribbean")
+world_lac <- filter(world, !is.na(country.y))
+
+pl <- function(dat){
+  tmap_style("bw")
+tm_shape(dat, simplify=0.1, keep.units=TRUE)+
+  tm_polygons("sez_perc_cdt", palette="Greys")+
+  tm_symbols(col = "blue", size = "holiday_time", scale = .5)+
+  tm_text("iso3c", size=0.5, remove.overlap = TRUE)
+}
+
+latam <- pl(dat=filter(world_lac, subregion=="South America"|subregion=="Central America"))
+car <- pl(dat=filter(world_lac, subregion=="Caribbean"))+
+  tm_layout(legend.show=FALSE)
+
+tmap_arrange(latam, car)
+
+```
+
+
+
+```{r analysis prevalence}
 
 colours <- c("Full exemption or long tax holiday"="#006d2c", 
           "Short tax holiday (10y or less)"="#31a354", 
@@ -172,38 +178,32 @@ colours <- c("Full exemption or long tax holiday"="#006d2c",
           "Jurisdiction without CIT"="#377eb8",
           "No SEZs"="#984ea3")
 
-
 pl <- function(dat){
 ggplot(dat) +
  geom_sf_pattern(aes(fill=sez_perc_cdt, pattern_alpha=holiday_dummy), pattern="crosshatch", pattern_fill="white", pattern_spacing=0.03)+
   #scale_fill_manual(values=colours, guide=guide_legend(keywidth=0.7, keyheight=0.7))+
-  scale_fill_gradient(low = "#FFFFFF", high="#000000", guide=guide_colorbar(keywidth=0.7, keyheight=0.7))+
-  scale_pattern_alpha_discrete(range = c(0,1), guide=guide_legend(keywidth=0.7, keyheight=0.7))+
+  scale_fill_gradient(low = "#FFFFFF", high="#000000")+
+  scale_pattern_alpha_discrete(range = c(0,1))+
   theme_minimal()+
   theme(panel.grid = element_blank(),
        axis.text = element_blank())
 }
 
+latam <- pl(dat=filter(world_lac, subregion=="South America"|subregion=="Central America"))
+car <- pl(dat=filter(world_lac, subregion=="Caribbean"))
 
-
-latam <- pl(dat=filter(world_lac, subregion=="South America"|subregion=="Central America"))+ theme(legend.position = "none")
-car <- pl(dat=filter(world_lac, subregion=="Caribbean"))+ theme(legend.position = "none")
-leg <- get_legend(pl(dat=world_lac))
-ggarrange(latam, ggarrange(car, leg, ncol=1, nrow=2), ncol=2, nrow=1)
-
-ggarrange(ggarrange(latam, car, ncol=2, nrow=1), leg, ncol=1, nrow=2)
+latam + car +  plot_layout(guides = 'collect')
 
 ```
 
+
 ## Analysis of impact of BEPS Action 5 and Code of Conduct
 
-Data regarding the work of the EU Code of Conduct Group can be obtained from the website of the European Council under <https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf>.
+Data regarding the work of the Forum on Harmful Tax Practices (FHTP) can be obtained from <http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf> and data of the EU Code of Conduct Group can be obtained from the website of the European Council under <https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf>.
 The data is converted from pdf to csv following a prodcedure listed in the data_preparation document.
 
 ### Comparing data between both organizations
-Now we can first compare whether the EU document lists all regimes that are listed in the OECD report.
-
-
+The EU document also reports about regimes that have been reviewed by the FHTP. One can therefore compare the documents to find out whether it is sufficient to use the EU document as data source. For this purpoose we check whether whether the EU document lists all regimes that are listed in the OECD report.
 
 ```{r comparison EU and OECD data}
 
@@ -219,22 +219,22 @@ beps_regimes %>% nrow %>% print
 The EU only lists 64 regimes that were reviewed by the OECD FHTP report, whereas in that report 309 regimes appear. This means that both datasets need to be taken into account.
 
 ### Selecting SEZ regimes
-Neither OECD nor EU reports not classify directly which regimes are special economic zones, but the information is usually contained in the regime name. We filter the regimes by those which contain the a reference to a "zone", "centre", "city", "area" in them or which referred directly to Labuan, a Malaysian SEZ. Afterwards false hits were excluded, mainly where "centre" did not refer to a financial centre but to a regime for a "centre" function of a firm, such as treasury. In the case of the EU, the word "centre" was not used, but some further regimes that appeared to be SEZs were added.
+Neither OECD nor EU reports classify directly which regimes are special economic zones, but the information is usually contained in the regime name. We filter the regimes by those which contain the a reference to a "zone", "centre", "city", "area" in them or which referred directly to Labuan, a Malaysian SEZ. Afterwards false hits were excluded, mainly where "centre" did not refer to a financial centre but to a regime for a "centre" function of a firm, such as treasury. In the case of the EU, the word "centre" was not used initially (since too many errors were produced). However, some further regimes that based on their name and a quick check using google appeared to be SEZs were added.
 
 ```{r select BEPS Action 5 SEZ}
 
 beps_regimes_sez <- filter(beps_regimes, grepl(paste(c("zone", "centre", "city", "area", "Labuan"), collapse="|"), regime_name, ignore.case=TRUE))
 
-##manual removal of regimes falsely identified as SEZ
-beps_regimes_sez <- beps_regimes_sez[-c(12:13, 16, 22:26, 28, 32, 33, 41, 44, 68, 71,72),] ## <https://thailand.ahk.de/en/members/member-news/news-details/overview-of-the-international-business-centre-regime> 
-##https://lawphil.net/statutes/repacts/ra1999/ra_8756_1999.html
-## https://georgiawealth.info/en/the-face-of-virtual-zone-in-georgia/
-##https://juslaws.com/international-trade-centers-itc.php
+#manual removal of regimes falsely identified as SEZ
+beps_regimes_sez <- beps_regimes_sez[-c(12:13, 16, 22:26, 28, 32, 33, 41, 44, 68, 71,72),] 
+# Sources checked:
+# <https://thailand.ahk.de/en/members/member-news/news-details/overview-of-the-international-business-centre-regime> 
+#https://lawphil.net/statutes/repacts/ra1999/ra_8756_1999.html
+# https://georgiawealth.info/en/the-face-of-virtual-zone-in-georgia/
+#https://juslaws.com/international-trade-centers-itc.php
 
 nrow(beps_regimes_sez)
 nrow(distinct(beps_regimes_sez, country))
-
-
 
 ```
 As of July 2019 (when the latest FHTP review was published), the FHTP had reviewed 60 Special Economic Zones regimes in 32 countries worldwide (or was in the process of undertaking a review).
@@ -308,6 +308,9 @@ regimes_sez %>% filter(region=="Latin America & Caribbean") %>% arrange(iso3c) %
 regimes_sez %>% filter(region=="Latin America & Caribbean") %>% nrow
 
 
+#To do: combine rate table and regime table
+
+
 regimes_sez_ctry <- regimes_sez %>% pivot_wider(id_cols=c("iso3c", "institution"), names_from=c("assessment", "institution"), values_from="regime_name")
 
 regimes_sez_ctry %<>%   add_column(harmfulregimes_found = NA)%<>% mutate(harmfulregimes_found= case_when(harmful_COCG=="NULL"&harmful_OECD_FHTP=="NULL"~"no", TRUE~"yes" ))
@@ -318,10 +321,9 @@ lac_sez %<>% mutate(regime_assessed = str_replace_na(regime_assessed, "no"))
 lac_sez %<>% mutate_at(.vars=c("harmful_COCG", "harmful_OECD_FHTP"), as.character)
 
 ##add inclusive framework and write to file
-source("C:/Users/Frederik/surfdrive/RScripts/extracting Inclusive Framework jurisdictions.R")
+inc_frame <- readRDS("data_prepared/inc_frame.rds")
 
-complete <- left_join(complete, incframe[c("iso3c","Membership")])
-complete %>% filter(is.na(Membership)) %>% nrow
-
+lac_sez <- left_join(lac_sez, inc_frame[c("iso3c","membership")])
+lac_sez %>% filter(is.na(membership)) %>% nrow
 
 ```

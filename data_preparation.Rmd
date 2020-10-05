@@ -22,6 +22,50 @@ if (!require('rlist')) install.packages('rlist'); library('rlist')
 
 This file contains the major data operation carried out to clean and transform the files used in the SEZ project.
 
+# UNCTAD data set
+
+```{r UNCTAD}
+unctad <- read_csv2("data_raw/WIR19_tab21.csv",skip=2, col_names=TRUE)
+unctad %<>% drop_na(Economya)
+#take footnotes out of country names
+unctad[178,1]<-"Jamaica"
+unctad[207,1]<-"Turkmenistan"
+unctad[104,1]<-"Bhutan"
+
+unctad  %<>%  rename(country = "Economya",
+                     sez_no = "Number of SEZs (established by law)",
+                     regime_name = 3,
+                     sez_no_dev = "Of which, under development",
+                     size0_20 = "Size",
+                     size20_100 = "X7",
+                     size100_500 = "X8",
+                     size500_1000 = "X9",
+                     size1000plus = "X10",
+                     sizeNA ="X11",
+                     fun_log = "Functionality",
+                     fun_multi = "X14",
+                     fun_spec = "X15",
+                     fun_inno = "X16",
+                     fp_no ="Number of single-enterprise zones (\"free points\")",
+                     sez_no_plan = "Number of SEZs in planningb",
+                     legal_framework = "National SEZ law or other legal frameworkd",
+                     first_y= "Year of the first promulgation of lawc") 
+
+#delete empty columns
+unctad <- unctad[,-c(2, 12, 19, 21, 23, 25, 26)]
+unctad <- countrycustommatch::countrymatch_w_list(df=unctad, columnname="country")
+
+unctad %<>% mutate_at(vars(sez_no,fp_no),as.numeric)
+unctad %<>% mutate_at(vars(first_y), as.integer)
+unctad %<>% mutate_if(is.character, list(~na_if(., "..")))
+
+write_csv2(unctad, "data_prepared/unctad_sez.csv")
+saveRDS(unctad, "data_prepared/unctad_sez.rds")
+
+
+```
+
+
 
 #tax rate data from CIAT and KPMG
 
@@ -236,6 +280,41 @@ if (cc_regimes$eurostat[i]=="AN"){cc_regimes$iso3c[i] <- "BES"}
 
 write_csv2(cc_regimes, "data_prepared/cc_regimes_clean.csv")
 saveRDS(cc_regimes, "data_prepared/cc_regimes_clean.rds")
+```
+
+# BEPS Inclusive Framework members
+
+A list of the members of the BEPS Inclusive Framework was downloaded from the website 
+<http://www.oecd.org/tax/beps/inclusive-framework-on-beps-composition.pdf> on 
+
+The pdf document was transformed to a dataset and countrycodes were added. 
+
+```{r Inclusive Framework members}
+
+
+file <- "http://www.oecd.org/tax/beps/inclusive-framework-on-beps-composition.pdf"
+out <- tabulizer::extract_tables(file, pages=1, method="decide")
+Encoding(out[[1]]) <- "UTF-8"   ##use this to make sure, country names do not read funnily
+inc_frame_raw <- as.data.frame(out[1])
+##next step is taking the columns to the right and placing them under the column
+inc_frame_raw_1 <- dplyr::select(inc_frame_raw, X3, X4)
+names(inc_frame_raw_1) <- c("X1", "X2")
+inc_frame_raw_2 <- dplyr::select(inc_frame_raw, X5, X6)
+names(inc_frame_raw_2) <- c("X1", "X2")
+
+inc_frame_raw <- dplyr::select(inc_frame_raw, X1, X2)
+inc_frame <- dplyr::bind_rows(inc_frame_raw, inc_frame_raw_1, inc_frame_raw_2)
+inc_frame <- dplyr::na_if(inc_frame, "")
+inc_frame <- tidyr::drop_na(inc_frame, X1)
+inc_frame <- add_column(inc_frame, membership="Yes")
+inc_frame <- inc_frame[,-1]
+names(inc_frame) <- c("country", "membership")
+inc_frame <- countrycustommatch::countrymatch_w_list(inc_frame, "country")
+
+write_csv2(inc_frame, "data_prepared/inc_frame.csv")
+saveRDS(inc_frame, "data_prepared/inc_frame.rds")
+
+
 ```
 
 
