@@ -1,12 +1,14 @@
 ---
 title: "data preparation"
 author: "Frederik Heitmüller"
-date: "8 September 2020"
+date: "13 October 2020"
 output: github_document
 ---
 
 ```{r setup, include=TRUE}
 knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+
+if (!require('here')) install.packages('here'); library('here') 
 if (!require('XML')) install.packages('XML'); library('XML') 
 if (!require('pdftools')) install.packages('pdftools'); library('pdftools') 
 if (!require('tabulizer')) install.packages('tabulizer'); library('tabulizer') 
@@ -15,6 +17,9 @@ if (!require('tidyverse')) install.packages('tidyverse'); library('tidyverse')
 if (!require('magrittr')) install.packages('magrittr'); library('magrittr')
 if (!require('countrycode')) install.packages('countrycode'); library('countrycode')
 if (!require('rlist')) install.packages('rlist'); library('rlist') 
+if (!require('devtools')) install.packages('devtools'); library('devtools') 
+if (!require('transformpdftbl')) install.github("fheitmueller/transformpdftbl"); library('transformpdftbl') 
+
 
 ```
 
@@ -25,12 +30,8 @@ This file contains the major data operation carried out to clean and transform t
 # UNCTAD data set
 
 ```{r UNCTAD}
-unctad <- read_csv2("data_raw/WIR19_tab21.csv",skip=2, col_names=TRUE)
+unctad <- read_csv2(here("data_raw/WIR19_tab21.csv"),skip=2, col_names=TRUE)
 unctad %<>% drop_na(Economya)
-#take footnotes out of country names
-unctad[178,1]<-"Jamaica"
-unctad[207,1]<-"Turkmenistan"
-unctad[104,1]<-"Bhutan"
 
 unctad  %<>%  rename(country = "Economya",
                      sez_no = "Number of SEZs (established by law)",
@@ -53,14 +54,19 @@ unctad  %<>%  rename(country = "Economya",
 
 #delete empty columns
 unctad <- unctad[,-c(2, 12, 19, 21, 23, 25, 26)]
-unctad <- countrycustommatch::countrymatch_w_list(df=unctad, columnname="country")
+# delete rows that do not relate to countries
+unctad <- unctad[-c(1, 2, 44, 45, 100, 141, 154, 191, 210:221), ]
+
+#Note that Kosovo's is the world bank code, as Kosovo does not have an iso3c code.
+unctad %<>% mutate(iso3c = countrycode(coalesce(countryname(country), country), "country.name", "iso3c", custom_match = c("Micronesia, Federated States of", "Kosovo"="KSV")))
+unctad %<>% mutate_at(vars(sez_no, fp_no), str_replace_all, " ", "")
 
 unctad %<>% mutate_at(vars(sez_no,fp_no),as.numeric)
 unctad %<>% mutate_at(vars(first_y), as.integer)
 unctad %<>% mutate_if(is.character, list(~na_if(., "..")))
 
-write_csv2(unctad, "data_prepared/unctad_sez.csv")
-saveRDS(unctad, "data_prepared/unctad_sez.rds")
+write_csv2(unctad, here("data_prepared/unctad_sez.csv"))
+saveRDS(unctad, here("data_prepared/unctad_sez.rds"))
 
 
 ```
@@ -71,34 +77,31 @@ saveRDS(unctad, "data_prepared/unctad_sez.rds")
 
 ```{r combine with tax data}
 
-ciat_rates <- read_delim("data_raw/IRPJ_Alicuotas_Maximas.csv", delim=";",skip=3, skip_empty_rows = TRUE, na=c("","n.d.","-"))
+ciat_rates <- read_delim(here("data_raw/IRPJ_Alicuotas_Maximas.csv"), delim=";",skip=3, skip_empty_rows = TRUE, na=c("","n.d.","-"))
 ciat_rates <- ciat_rates[-(19:1790),-(41:166)]
 ciat_rates %<>% rename(country = X1)
 ciat_rates$country <-  str_replace_all(ciat_rates$country, pattern="[1234/]",replacement= "")
 ciat_rates$country %<>% trimws
 
-ciat_rates <- countrycustommatch::countrymatch_w_list(df=ciat_rates, columnname="country")
+ciat_rates %<>% mutate(iso3c = countrycode(coalesce(countryname(country), country), "country.name", "iso3c", custom_match=c("Perú"="PER", "Rep. Dominicana"="DOM")))
 
-write_csv2(ciat_rates, "data_prepared/ciat_rates_clean.csv")
-saveRDS(ciat_rates, "data_prepared/ciat_rates_clean.rds")
+write_csv2(ciat_rates, here("data_prepared/ciat_rates_clean.csv"))
+saveRDS(ciat_rates, here("data_prepared/ciat_rates_clean.rds"))
 
 
-kpmg_rates <- read_delim("data_raw/KPMGrates.csv", delim=";", skip_empty_rows = TRUE)
+kpmg_rates <- read_delim(here("data_raw/KPMGrates.csv"), delim=";", skip_empty_rows = TRUE)
 kpmg_rates %<>% rename(country = Location)
-kpmg_rates <- countrycustommatch::countrymatch_w_list(df=kpmg_rates, columnname="country")
 
-write_csv2(kpmg_rates, "data_prepared/kpmg_rates_clean.csv")
-saveRDS(kpmg_rates, "data_prepared/kpmg_rates_clean.rds")
-
-
-
+kpmg_rates %<>% mutate(iso3c = countrycode(countryname(country), "country.name", "iso3c"))
+write_csv2(kpmg_rates, here("data_prepared/kpmg_rates_clean.csv"))
+saveRDS(kpmg_rates, here("data_prepared/kpmg_rates_clean.rds"))
 
 ```
 
 # BEPS Action 5 report
-All data with regards to preferential regimes is taken from http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf
+All data with regards to preferential regimes is taken from <http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf>
 
-```{r pressure, echo=FALSE}
+```{r file, echo=FALSE}
 #First, obtain this data from the relevant website and store link as variable
 file <- "http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf"
 
@@ -139,7 +142,7 @@ list.save(arealist, file="arealist.RData")  ##start from here to avoid the selec
 ```{r loading arealist}
 ##With the subsequent command the saved arealist can be loaded
 
-arealist <- list.load("data_created/arealist.RData")
+arealist <- list.load(here("data_created/arealist.RData"))
 ```
 The next step is to create list of all regime types that can later on be added as additional column.
 ```{r storing regime names}
@@ -193,14 +196,10 @@ beps_regimes <- beps_regimes[-1]
 beps_regimes <- mutate_all(beps_regimes, str_trim)
 #to remove cells that contain footnote numbers:
 for (i in 1:9){beps_regimes$status <- str_remove(beps_regimes$status, as.character(i))} 
-beps_regimes <- countrycustommatch::countrymatch_w_list(df=beps_regimes, columnname="country")
+beps_regimes %<>% mutate(iso3c = countrycode(countryname(country), "country.name", "iso3c"))
 
-# manually adding codes for China (because apostroph in different format than UTF-8) and for Switzerland because of differentiation between federal and cantonal level in country column
-beps_regimes$iso3c[14] <- "CHN"
-beps_regimes$iso3c[124:128] <- "CHE"
-
-write_csv2(beps_regimes, "data_prepared/beps_regimes_clean.csv")
-saveRDS(beps_regimes, "data_prepared/beps_regimes_clean.rds")
+write_csv2(beps_regimes, here("data_prepared/beps_regimes_clean.csv"))
+saveRDS(beps_regimes, here("data_prepared/beps_regimes_clean.rds"))
 
 ```
 
@@ -272,14 +271,11 @@ cc_regimes %<>% mutate(institution = str_replace_all(institution,"\\(", ""))
 cc_regimes %<>% mutate(institution = str_replace_all(institution,"\\)", ""))
 cc_regimes %<>% mutate_all(trimws)
 cc_regimes  %<>% mutate(institution = na_if(institution,"")) %<>% mutate(institution = str_replace_na(institution, "COCG"))
-cc_regimes$iso3c <- countrycode(cc_regimes$eurostat, origin="eurostat", destination="iso3c")
-for (i in 1:nrow(cc_regimes)){
-if (cc_regimes$eurostat[i]=="AN"){cc_regimes$iso3c[i] <- "BES"}
-  if (cc_regimes$eurostat[i]=="NA"){cc_regimes$iso3c[i] <- "NAM"}
-  }
+cc_regimes$iso3c <- countrycode(cc_regimes$eurostat, origin="eurostat", destination="iso3c", custom_match = c("AN"="BES", "NA"="NAM"))
 
-write_csv2(cc_regimes, "data_prepared/cc_regimes_clean.csv")
-saveRDS(cc_regimes, "data_prepared/cc_regimes_clean.rds")
+
+write_csv2(cc_regimes, here("data_prepared/cc_regimes_clean.csv"))
+saveRDS(cc_regimes, here("data_prepared/cc_regimes_clean.rds"))
 ```
 
 # BEPS Inclusive Framework members
@@ -309,10 +305,11 @@ inc_frame <- tidyr::drop_na(inc_frame, X1)
 inc_frame <- add_column(inc_frame, membership="Yes")
 inc_frame <- inc_frame[,-1]
 names(inc_frame) <- c("country", "membership")
-inc_frame <- countrycustommatch::countrymatch_w_list(inc_frame, "country")
 
-write_csv2(inc_frame, "data_prepared/inc_frame.csv")
-saveRDS(inc_frame, "data_prepared/inc_frame.rds")
+inc_frame %<>% mutate(iso3c = countrycode(countryname(country), "country.name", "iso3c"))
+
+write_csv2(inc_frame, here("data_prepared/inc_frame.csv"))
+saveRDS(inc_frame, here("data_prepared/inc_frame.rds"))
 
 
 ```

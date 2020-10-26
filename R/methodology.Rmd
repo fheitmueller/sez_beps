@@ -1,13 +1,18 @@
 ---
 title: "SEZ, BEPS Action 5, EU Code of Conduct - Methodology"
 author: "Frederik Heitmüller"
-date: "5 October 2020"
+date: "26 October 2020"
 output: html_document
+keep_md: true
+toc: true
+toc_depth: 2
+number_sections: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
 
+if (!require('here')) install.packages('here'); library('here')
 if (!require('tidyverse')) install.packages('tidyverse'); library('tidyverse')
 library(readxl)
 if (!require('knitr')) install.packages('knitr'); library('knitr') 
@@ -24,8 +29,7 @@ if (!require('ggpattern')) remotes::install_github("coolbutuseless/ggpattern"); 
 library(lubridate)
 if (!require('tmap')) install.packages('tmap'); library('tmap')
 if (!require('patchwork')) install.packages('patchwork'); library('patchwork')
-
-
+if (!require('UpSetR')) install.packages('UpSetR'); library('UpSetR')
 ```
 
 The analysis proceeds in four steps:
@@ -38,7 +42,7 @@ In a first step, the geographical scope of the analysis is determined. Since the
 
 ```{r countries included}
 
-wb <- read_excel("data_raw/CLASS.xls", skip=4)
+wb <- read_excel(here("data_raw/CLASS.xls"), skip=4)
 wb %<>%  rename(country = Economy, iso3c=Code, region=Region)
 lac_countries <- wb %>% filter(region=="Latin America & Caribbean") %>% select(country,iso3c)
 nrow(lac_countries)
@@ -48,7 +52,7 @@ countries.
 In a next step, data on the prevalence of SEZs is added from the UNCTAD World Investment report. The dataset was downloaded on June 16 2020 from <https://unctad.org/Sections/dite_dir/docs/WIR2019/WIR19_tab21.xlsx>. 
 ```{r UNCTAD SEZ data, results=FALSE}
 
-unctad <- readRDS("data_prepared/unctad_sez.rds")
+unctad <- readRDS(here("data_prepared/unctad_sez.rds"))
 
 lac_sez <- left_join(lac_countries, unctad[c("iso3c", "sez_no","fp_no","first_y")], by="iso3c")
 
@@ -81,14 +85,14 @@ In the next step, a table was prepared where missing values for generally applic
 
 ```{r classifying countries}
 
-ciat_rates_clean <- readRDS("data_prepared/ciat_rates_clean.rds")
+ciat_rates_clean <- readRDS(here("data_prepared/ciat_rates_clean.rds"))
 lac_sez <- left_join(lac_sez,ciat_rates_clean[c("2018", "iso3c")])
 lac_sez %<>% rename(ciat_rate_2018 = "2018")
-kpmg_rates_clean <- readRDS("data_prepared/kpmg_rates_clean.rds")
+kpmg_rates_clean <- readRDS(here("data_prepared/kpmg_rates_clean.rds"))
 lac_sez <- left_join(lac_sez,kpmg_rates_clean[c("2018", "iso3c")])
 lac_sez %<>% rename(kpmg_rate_2018 = "2018")
 
-add_rates <- read_delim("data_created/additional_rates.csv", delim=";", col_names=TRUE)
+add_rates <- read_delim(here("data_created/additional_rates.csv"), delim=";", col_names=TRUE)
 lac_sez <- left_join(lac_sez,add_rates[c("additional_rate", "iso3c")])
 
 ## creating one vector with all generally applicable income tax rates. Privilege is given first to CIAT, then KPMG, then manual
@@ -107,7 +111,7 @@ The sectoral scope of the regime was generally not recorded. The issue whether a
 In the future this dataset might be updated to include more data years.
 
 ```{r new rate dataset}
-sez_rates <- read_delim("data_created/sez_rates2.csv", delim=";", col_names=TRUE)
+sez_rates <- read_delim(here("data_created/sez_rates.csv"), delim=";", col_names=TRUE)
 lac_sez <- full_join(lac_sez, sez_rates, by="iso3c")
 lac_sez %<>% filter(is.na(sez_or_disad_area)|sez_or_disad_area!="disad_area")
 lac_sez <- unique(lac_sez)
@@ -142,7 +146,7 @@ lac_sez_rec %>% select(category,composite) %>% group_by(category) %>% group_nest
 
 ```
 
-```{r new map}
+```{r black and white map}
 world <- ne_countries(scale = "medium", returnclass = "sf")
 world %<>% rename(iso3c = iso_a3)
 world <- left_join(world, lac_sez_rec_cds, by=c("iso3c"))
@@ -167,7 +171,7 @@ tmap_arrange(latam, car)
 
 
 
-```{r analysis prevalence}
+```{r color map}
 
 colours <- c("Full exemption or long tax holiday"="#006d2c", 
           "Short tax holiday (10y or less)"="#31a354", 
@@ -178,7 +182,7 @@ colours <- c("Full exemption or long tax holiday"="#006d2c",
           "Jurisdiction without CIT"="#377eb8",
           "No SEZs"="#984ea3")
 
-pl <- function(dat){
+pl_bl_pat <- function(dat){
 ggplot(dat) +
  geom_sf_pattern(aes(fill=sez_perc_cdt, pattern_alpha=holiday_dummy), pattern="crosshatch", pattern_fill="white", pattern_spacing=0.03)+
   #scale_fill_manual(values=colours, guide=guide_legend(keywidth=0.7, keyheight=0.7))+
@@ -189,10 +193,21 @@ ggplot(dat) +
        axis.text = element_blank())
 }
 
-latam <- pl(dat=filter(world_lac, subregion=="South America"|subregion=="Central America"))
-car <- pl(dat=filter(world_lac, subregion=="Caribbean"))
+pl_cl <- function(dat){ggplot(dat) +
+  geom_sf(aes(fill = category))+
+  scale_fill_manual(values=colours, guide=guide_legend(keywidth=0.7, keyheight=0.7))+
+theme_minimal()+
+  theme(panel.grid = element_blank(),
+       axis.text = element_blank())
+}
+latam <- pl_cl(dat=filter(world_lac, subregion=="South America"|subregion=="Central America"))+ theme(legend.position = "none")
+car <- pl_cl(dat=filter(world_lac, subregion=="Caribbean"))+ theme(legend.position = "none")
+leg <- get_legend(pl_cl(dat=world_lac))
 
-latam + car +  plot_layout(guides = 'collect')
+ggarrange(latam, ggarrange(car, leg, ncol=1, nrow=2), ncol=2, nrow=1)
+
+
+
 
 ```
 
@@ -207,8 +222,8 @@ The EU document also reports about regimes that have been reviewed by the FHTP. 
 
 ```{r comparison EU and OECD data}
 
-beps_regimes <- readRDS("data_prepared/beps_regimes_clean.rds")
-cc_regimes <- readRDS("data_prepared/cc_regimes_clean.rds")
+beps_regimes <- readRDS(here("data_prepared/beps_regimes_clean.rds"))
+cc_regimes <- readRDS(here("data_prepared/cc_regimes_clean.rds"))
 
 cc_regimes %>% filter(institution==c("OECD FHTP", "OECD FHTP + COCG")) %>% nrow %>% print
 beps_regimes %>% nrow %>% print
@@ -263,14 +278,34 @@ If the field was left empty, this most likely implies that the regime is still "
 beps_regimes_sez %<>% select(!c(regime_type, country))
 beps_regimes_sez %<>% rename(assessment=status)
 beps_regimes_sez %<>% add_column(institution="OECD FHTP")
+beps_regimes_sez$assessment %<>% as_factor
+
+beps_regimes_sez %<>% mutate(reaction = fct_collapse(assessment, "change_introduced" = 
+                                           c("Not harmful (amended) except for the extension to new entrants between  July 01 and 1 October 201, which is harmful", 
+                                             "Not harmful (amended)",
+                                            "Abolished",
+                                             "Out of scope (amended)"),
+                                           "in_process" =
+                                             c("In the process of being amended",
+                                              "In the process of being eliminated/amended", 
+                                              "In the process of being eliminated"),
+                                           "not_amended" =
+                                           c("Harmful",
+                                             "Not operational",
+                                             "Disadvantaged areas regime",
+                                             "Out of scope",
+                                             "Not harmful",
+                                             "Under review")))
 
 cc_regimes_sez %<>% select(regime_name, assessment, iso3c, institution, rollback)
-cc_regimes_sez %<>% rename(comments=rollback)
+cc_regimes_sez %<>% rename(reaction=rollback)
+cc_regimes_sez %<>% mutate(reaction = case_when(reaction==""~"not_amended", TRUE~"change_introduced"))
 
 regimes_sez <- bind_rows(beps_regimes_sez, cc_regimes_sez, .id="source")
 regimes_sez$source %<>% recode("1" = "OECD", "2" ="EU")
 
 regimes_sez$assessment %<>% as_factor
+
 regimes_sez$assessment %<>% fct_collapse("harmful" = 
                                            c("Not harmful (amended) except for the extension to new entrants between  July 01 and 1 October 201, which is harmful", 
                                              "Not harmful (amended)",
@@ -300,30 +335,47 @@ regimes_sez$institution %<>% recode("OECD FHTP" = "OECD_FHTP")
 
 regimes_sez <- left_join(regimes_sez, wb[c("iso3c", "region")], by="iso3c")
 
-write_csv2(regimes_sez, "data_created/regimes_sez_combined.csv")
-saveRDS(regimes_sez, "data_created/regimes_sez_combined.rds")
+write_csv2(regimes_sez, here("data_created/regimes_sez_combined.csv"))
+saveRDS(regimes_sez, here("data_created/regimes_sez_combined.rds"))
 
 regimes_sez %>% filter(region=="Latin America & Caribbean") %>% arrange(iso3c) %>%  kable %>% kable_styling()
 
 regimes_sez %>% filter(region=="Latin America & Caribbean") %>% nrow
 
+```
 
-#To do: combine rate table and regime table
+# Combining SEZ regime data and data on reviews
 
+The last part combines country data on SEZ benefits and data on reviews undertaken by the OECD and the Code of Conduct. 
+
+```{r data combination}
 
 regimes_sez_ctry <- regimes_sez %>% pivot_wider(id_cols=c("iso3c", "institution"), names_from=c("assessment", "institution"), values_from="regime_name")
 
 regimes_sez_ctry %<>%   add_column(harmfulregimes_found = NA)%<>% mutate(harmfulregimes_found= case_when(harmful_COCG=="NULL"&harmful_OECD_FHTP=="NULL"~"no", TRUE~"yes" ))
 regimes_sez_ctry %<>% add_column(regime_assessed = "yes")
 
-lac_sez <- left_join(lac_sez, regimes_sez_ctry[c("iso3c","harmful_COCG", "harmful_OECD_FHTP", "harmfulregimes_found","regime_assessed")])
-lac_sez %<>% mutate(regime_assessed = str_replace_na(regime_assessed, "no"))
-lac_sez %<>% mutate_at(.vars=c("harmful_COCG", "harmful_OECD_FHTP"), as.character)
+lac_sez_rec_cds <- left_join(lac_sez_rec_cds, regimes_sez_ctry[c("iso3c","harmful_COCG", "harmful_OECD_FHTP", "harmfulregimes_found","regime_assessed")])
+lac_sez_rec_cds %<>% mutate(regime_assessed = str_replace_na(regime_assessed, "no"))
+lac_sez_rec_cds %<>% mutate_at(.vars=c("harmful_COCG", "harmful_OECD_FHTP"), as.character)
 
-##add inclusive framework and write to file
-inc_frame <- readRDS("data_prepared/inc_frame.rds")
+##add inclusive framework
+inc_frame <- readRDS(here("data_prepared/inc_frame.rds"))
 
-lac_sez <- left_join(lac_sez, inc_frame[c("iso3c","membership")])
-lac_sez %>% filter(is.na(membership)) %>% nrow
+lac_sez_rec_cds <- left_join(lac_sez_rec_cds, inc_frame[c("iso3c","membership")])
+
+# transform dummy variables to zeros and ones
+
+lac_sez_rec_cds_dummy <- lac_sez_rec_cds
+lac_sez_rec_cds_dummy %<>% mutate(harmfulregimes_found = case_when(harmfulregimes_found=="yes"~1, TRUE~0))
+lac_sez_rec_cds_dummy %<>% mutate(regime_assessed = case_when(regime_assessed=="yes"~1, TRUE~0))
+lac_sez_rec_cds_dummy %<>% mutate(sez_incentive = case_when(category=="No benefit"|category== "Jurisdiction without CIT"|category=="No SEZs" ~0, TRUE~1))
+lac_sez_rec_cds_dummy %<>% add_column(all_countries = 1)
+lac_sez_rec_cds_dummy %<>% mutate(has_sez = case_when(sez_no>0~1, TRUE~0))
+
+upset(as.data.frame(lac_sez_rec_cds_dummy), sets=c("all_countries", "has_sez", "sez_incentive", "regime_assessed", "harmfulregimes_found"), keep.order=T, order.by= "degree", mainbar.y.label="No. of countries")
+
+
 
 ```
+
