@@ -10,23 +10,7 @@ output:
     keep_md: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
-if (!require('here')) install.packages('here'); library('here') 
-if (!require('XML')) install.packages('XML'); library('XML') 
-if (!require('pdftools')) install.packages('pdftools'); library('pdftools') 
-if (!require('tabulizer')) install.packages('tabulizer'); library('tabulizer') 
-if (!require('rJava')) install.packages('rJava'); library('rJava')
-if (!require('tidyverse')) install.packages('tidyverse'); library('tidyverse')
-if (!require('magrittr')) install.packages('magrittr'); library('magrittr')
-if (!require('countrycode')) install.packages('countrycode'); library('countrycode')
-if (!require('rlist')) install.packages('rlist'); library('rlist') 
-if (!require('devtools')) install.packages('devtools'); library('devtools') 
-if (!require('transformpdftbl')) install.github("fheitmueller/transformpdftbl"); library('transformpdftbl') 
-
-
-```
 
 # Content
 
@@ -34,13 +18,26 @@ This file contains the major data operation carried out to clean and transform t
 
 The following R packages are used in this analysis:
 
-```{r packages used}
+
+```r
 installed.packages()[names(sessionInfo()$otherPkgs), "Version"]
+```
+
+```
+## transformpdftbl        devtools         usethis           rlist     countrycode 
+##         "0.1.0"         "2.3.2"         "1.6.3"       "0.4.6.1"         "1.2.0" 
+##        magrittr         forcats         stringr           dplyr           purrr 
+##           "1.5"         "0.5.0"         "1.4.0"         "1.0.2"         "0.3.4" 
+##           readr           tidyr          tibble         ggplot2       tidyverse 
+##         "1.4.0"         "1.1.2"         "3.0.3"         "3.3.2"         "1.3.0" 
+##           rJava       tabulizer        pdftools             XML            here 
+##        "0.9-13"         "0.2.2"         "2.3.1"      "3.99-0.5"           "0.1"
 ```
 
 # UNCTAD data set
 
-```{r UNCTAD}
+
+```r
 unctad <- read_csv2(here("data_raw/WIR19_tab21.csv"),skip=2, col_names=TRUE)
 unctad %<>% drop_na(Economya)
 
@@ -78,16 +75,14 @@ unctad %<>% mutate_if(is.character, list(~na_if(., "..")))
 
 write_csv2(unctad, here("data_prepared/unctad_sez.csv"))
 saveRDS(unctad, here("data_prepared/unctad_sez.rds"))
-
-
 ```
 
 
 
 #tax rate data from CIAT and KPMG
 
-```{r combine with tax data}
 
+```r
 ciat_rates <- read_delim(here("data_raw/IRPJ_Alicuotas_Maximas.csv"), delim=";",skip=3, skip_empty_rows = TRUE, na=c("","n.d.","-"))
 ciat_rates <- ciat_rates[-(19:1790),-(41:166)]
 ciat_rates %<>% rename(country = X1)
@@ -106,20 +101,16 @@ kpmg_rates %<>% rename(country = Location)
 kpmg_rates %<>% mutate(iso3c = countrycode(countryname(country), "country.name", "iso3c"))
 write_csv2(kpmg_rates, here("data_prepared/kpmg_rates_clean.csv"))
 saveRDS(kpmg_rates, here("data_prepared/kpmg_rates_clean.rds"))
-
 ```
 
 # BEPS Action 5 report
 All data with regards to preferential regimes is taken from <http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf>
 
-```{r file, echo=FALSE}
-#First, obtain this data from the relevant website and store link as variable
-file <- "http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf"
 
-```
 Next the pdf is parsed with the help of the R package "pdftools" and "tabulizer". For this purpose coordinates of the tables are manually selected and stored.
 
-```{r setting the page vectors}
+
+```r
 #Next step is to define the relevant pages in the pdf documents. Here, the different tables, based on different types of regimes are stored in separate variables. Afterwards they are included in a list which can be called in a loop. page 9 must be called twice, because there is a break in the table, pay attention to not take the headers with you.
 
 p1 <- c(1,2)
@@ -134,11 +125,10 @@ p9 <- c(17)
 p10 <- c(18)
 p11 <- c(18,19)
 pageslist <- list(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11)
-
 ```
 
-```{r manually selecting tables, eval=FALSE }
 
+```r
 ##The next step is manual and requires selecting the relevant areas to be selected in the pdfs. This is necessary because in this specific pdf document, the automatic selection from the pdftools package does not work satisfactorily. At the end the created list is saved, so that in further runs the manual procedure does not need to be undertaken again.
 
 for (i in 1:11){
@@ -148,15 +138,16 @@ for (i in 1:11){
   }
 arealist<-list(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)
 list.save(arealist, file="arealist.RData")  ##start from here to avoid the selection again
-
 ```
-```{r loading arealist}
+
+```r
 ##With the subsequent command the saved arealist can be loaded
 
 arealist <- list.load(here("data_created/arealist.RData"))
 ```
 The next step is to create list of all regime types that can later on be added as additional column.
-```{r storing regime names}
+
+```r
 t1 <- "low-tax jurisdiction"
 t2 <- "IP regime"
 t3 <- "first report non-IP"
@@ -169,10 +160,10 @@ t9 <- "holding"
 t10 <- "fund management"
 t11 <- "miscalleneous"
 typelist <- list(t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11)
-
 ```
 Subsequently, several datacleaning operations are undertaken to create one big table including all regimes. The regime type is added as additional column.
-```{r putting the tables together for each one of the subparts of the table}
+
+```r
 ###The following chunk is a loop which extracts the table, transforms them where necessary and puts them together in one big table.
 
 ## this part calls for each of the combination of pages
@@ -201,7 +192,8 @@ beps_regimes <- do.call(rbind, ext_list)
 ```
 
 Next the data is tidied in order to make it usable for analysis. The first column containing only numbers is taken out, trailing and leading spaces are removed and there is a loop to take numbers stemming from footnotes out. In Switzerland, several regimes are situated by subnational entities. As later on, analysis will only be carried out at national level, the cantonal names are removed and all data is analyzed on the national level. 
-```{r tidying the data and adding countrycodes}
+
+```r
 ##tidying the data
 beps_regimes <- beps_regimes[-1]
 beps_regimes <- mutate_all(beps_regimes, str_trim)
@@ -211,7 +203,6 @@ beps_regimes %<>% mutate(iso3c = countrycode(countryname(country), "country.name
 
 write_csv2(beps_regimes, here("data_prepared/beps_regimes_clean.csv"))
 saveRDS(beps_regimes, here("data_prepared/beps_regimes_clean.rds"))
-
 ```
 
 
@@ -220,8 +211,8 @@ saveRDS(beps_regimes, here("data_prepared/beps_regimes_clean.rds"))
 Data regarding the work of the EU Code of Conduct Group can be obtained from the website of the European Council under <https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf>.
 
 
-```{r Code of Conduct}
 
+```r
 file <- "https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf"
 
 out <- extract_tables(file, pages = c(4:95), columns=list(c(5, 10, 20, 30)), method = "stream", encoding="UTF-8", output="matrix")
@@ -296,9 +287,8 @@ A list of the members of the BEPS Inclusive Framework was downloaded from the we
 
 The pdf document was transformed to a dataset and countrycodes were added. 
 
-```{r Inclusive Framework members}
 
-
+```r
 file <- "http://www.oecd.org/tax/beps/inclusive-framework-on-beps-composition.pdf"
 out <- tabulizer::extract_tables(file, pages=1, method="decide")
 Encoding(out[[1]]) <- "UTF-8"   ##use this to make sure, country names do not read funnily

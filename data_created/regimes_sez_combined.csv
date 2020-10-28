@@ -85,53 +85,32 @@ EU;Amendments to the Economic Zones Act;under_review;NA;SVN;COCG;not_amended;Eur
 EU;Enterprises Zones;not_harmful;NA;GBR;COCG;not_amended;Europe & Central Asia
 EU;Free zones;harmful;NA;BES;COCG;change_introduced;NA
 EU;Free zones;harmful;NA;ABW;COCG;change_introduced;Latin America & Caribbean
-EU;Free Zone;under_review;NA;ABW;OECD_FHTP;not_amended;Latin America & Caribbean
 EU;Special zone San Nicolas;harmful;NA;ABW;COCG;change_introduced;Latin America & Caribbean
-EU;eZone;harmful;NA;CUW;OECD_FHTP;change_introduced;Latin America & Caribbean
-EU;Manufacturing activities under the eZone regime;harmful;NA;CUW;COCG;not_amended;Latin America & Caribbean
+EU;Manufacturing activities under the eZone regime;harmful;NA;CUW;COCG;change_introduced;Latin America & Caribbean
 EU;Free Zones;under_review;NA;ARE;COCG;not_amended;Middle East & North Africa
-EU;Free Trade Zones (Paradise Found Act, Yida Act, Free Trade Zone Act, Special Economic Zone Act);harmful;NA;ATG;COCG;not_amended;Latin America & Caribbean
+EU;Free Trade Zones (Paradise Found Act, Yida Act, Free Trade Zone Act, Special Economic Zone Act);harmful;NA;ATG;COCG;change_introduced;Latin America & Caribbean
 EU;Export Processing Zone;not_harmful;NA;BRA;COCG;not_amended;Latin America & Caribbean
 EU;Export processing zones (EPZ) enterprises;harmful;NA;BLZ;COCG;change_introduced;Latin America & Caribbean
 EU;Commercial free zone (CFZ);not_harmful;NA;BLZ;COCG;not_amended;Latin America & Caribbean
-EU;Free Zones;harmful;NA;CRI;OECD_FHTP;change_introduced;Latin America & Caribbean
 EU;Manufacturing activities under the amended Free Zones regime;harmful;NA;CRI;COCG;change_introduced;Latin America & Caribbean
 EU;Export processing / commercial free zones enterprises;not_harmful;NA;GRD;COCG;not_amended;Latin America & Caribbean
 EU;Free industrial zones (FIZ);not_harmful;NA;GEO;COCG;not_amended;Europe & Central Asia
-EU;Special economic zone;not_harmful;NA;IDN;OECD_FHTP;not_amended;East Asia & Pacific
-EU;Special Economic Zones (SEZS);not_harmful;NA;IND;OECD_FHTP;not_amended;South Asia
 EU;Special Economic Zones;not_harmful;NA;JAM;COCG;not_amended;Latin America & Caribbean
 EU;Free Zone;harmful;NA;JOR;OECD FHTP + COCG;change_introduced;Middle East & North Africa
-EU;Development Zone;harmful;NA;JOR;OECD_FHTP;not_amended;Middle East & North Africa
 EU;Least Developed Zones;not_harmful;NA;JOR;COCG;not_amended;Middle East & North Africa
-EU;Aqaba Special Economic Zone;under_review;NA;JOR;OECD_FHTP;not_amended;Middle East & North Africa
 EU;Foreign investment Zone (FIZ);harmful;NA;KOR;COCG;change_introduced;East Asia & Pacific
 EU;Free Trade / Economic Zones (FTEZ);harmful;NA;KOR;COCG;change_introduced;East Asia & Pacific
 EU;Free trade Zones;harmful;NA;LCA;COCG;change_introduced;Latin America & Caribbean
 EU;Export Free Zones (EFZ) or Free Trade Zones (FTZ);harmful;NA;MAR;COCG;not_amended;Middle East & North Africa
 EU;Casablanca Finance City;harmful;NA;MAR;COCG;not_amended;Middle East & North Africa
-EU;Technological industrial development zone;under_review;NA;MKD;OECD_FHTP;not_amended;Europe & Central Asia
-EU;Free trade zone;harmful;NA;MNG;OECD_FHTP;not_amended;East Asia & Pacific
-EU;Freeport Zone;harmful;NA;MUS;OECD_FHTP;change_introduced;Sub-Saharan Africa
 EU;Manufacturing activities under the Freeport zone regime;harmful;NA;MUS;COCG;change_introduced;Sub-Saharan Africa
-EU;Labuan Island - International Business and Financial Centre (IBFC);harmful;NA;MYS;OECD_FHTP;change_introduced;East Asia & Pacific
-EU;Labuan Island - Financing and Leasing;harmful;NA;MYS;OECD_FHTP;change_introduced;East Asia & Pacific
 EU;Export Processing Zones (EPZ);harmful;NA;NAM;COCG;not_amended;Sub-Saharan Africa
 EU;Free Zones Act;not_harmful;NA;PAN;COCG;not_amended;Latin America & Caribbean
 EU;Colon Free Zone;not_harmful;NA;PAN;COCG;not_amended;Latin America & Caribbean
-EU;Panama-Pacifico Special Economic Area;harmful;NA;PAN;OECD_FHTP;change_introduced;Latin America & Caribbean
-EU;Intellectual Property - City of Knowledge;harmful;NA;PAN;OECD_FHTP;change_introduced;Latin America & Caribbean
 EU;CETICOS special economic zone;not_harmful;NA;PER;COCG;not_amended;Latin America & Caribbean
-EU;Zofratacna special economic zone;not_harmful;NA;PER;OECD_FHTP;not_amended;Latin America & Caribbean
-EU;Free zone areas;under_review;NA;QAT;OECD_FHTP;not_amended;Middle East & North Africa
-EU;International Trade Zone (ITZ);harmful;NA;SYC;OECD_FHTP;change_introduced;Sub-Saharan Africa
 EU;Manufacturing activities in the International Trade Zone;harmful;NA;SYC;COCG;not_amended;Sub-Saharan Africa
 EU;Special economic zones;under_review;NA;SWZ;COCG;not_amended;Sub-Saharan Africa
-EU;Technology Development Zones;harmful;NA;TUR;OECD_FHTP;change_introduced;Europe & Central Asia
-EU;Free zones;not_harmful;NA;TUR;OECD_FHTP;not_amended;Europe & Central Asia
-EU;Free trade zone;harmful;NA;TTO;OECD_FHTP;not_amended;Latin America & Caribbean
 EU;Free Trade Zone;harmful;NA;TWN;COCG;change_introduced;East Asia & Pacific
-EU;Free zones;harmful;NA;URY;OECD_FHTP;change_introduced;Latin America & Caribbean
 EU;Export processing zones;not_harmful;NA;VNM;COCG;not_amended;East Asia & Pacific
 EU;Industrial Parks/Zones;not_harmful;NA;VNM;COCG;not_amended;East Asia & Pacific
 EU;Economic Zones;not_harmful;NA;VNM;COCG;not_amended;East Asia & Pacific
