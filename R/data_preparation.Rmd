@@ -281,7 +281,7 @@ saveRDS(cc_regimes, here("data_prepared/cc_regimes_clean.rds"))
 # BEPS Inclusive Framework members
 
 A list of the members of the BEPS Inclusive Framework was downloaded from the website 
-<http://www.oecd.org/tax/beps/inclusive-framework-on-beps-composition.pdf> on 
+<http://www.oecd.org/tax/beps/inclusive-framework-on-beps-composition.pdf> on 5 October 2020.
 
 The pdf document was transformed to a dataset and countrycodes were added. 
 
