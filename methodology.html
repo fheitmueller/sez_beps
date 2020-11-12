@@ -611,21 +611,17 @@ summary {
 - Analysing the corporate tax benefits of SEZs in Latin America and the Caribbean<br />
 - Assessing the impact of the FHTP’s and the EU Code of Conduct Group’s reviews on SEZs in Latin America</p>
 <p>The following R packages are used in this analysis:</p>
-<pre><code>##   lubridate countrycode    magrittr  kableExtra       knitr      readxl 
-##     &quot;1.7.9&quot;     &quot;1.2.0&quot;       &quot;1.5&quot;     &quot;1.2.1&quot;      &quot;1.30&quot;     &quot;1.3.1&quot; 
-##     forcats     stringr       dplyr       purrr       readr       tidyr 
-##     &quot;0.5.0&quot;     &quot;1.4.0&quot;     &quot;1.0.2&quot;     &quot;0.3.4&quot;     &quot;1.4.0&quot;     &quot;1.1.2&quot; 
-##      tibble     ggplot2   tidyverse        here 
-##     &quot;3.0.3&quot;     &quot;3.3.2&quot;     &quot;1.3.0&quot;       &quot;0.1&quot;</code></pre>
+<pre><code>##   lubridate countrycode    magrittr  kableExtra       knitr      readxl     forcats     stringr 
+##     &quot;1.7.9&quot;     &quot;1.2.0&quot;       &quot;1.5&quot;     &quot;1.2.1&quot;      &quot;1.30&quot;     &quot;1.3.1&quot;     &quot;0.5.0&quot;     &quot;1.4.0&quot; 
+##       dplyr       purrr       readr       tidyr      tibble     ggplot2   tidyverse        here 
+##     &quot;1.0.2&quot;     &quot;0.3.4&quot;     &quot;1.4.0&quot;     &quot;1.1.2&quot;     &quot;3.0.3&quot;     &quot;3.3.2&quot;     &quot;1.3.0&quot;       &quot;0.1&quot;</code></pre>
 <p>In a first step, the geographical scope of the analysis is determined. Since the article deals principally with the Latin American region, all countries and jurisdiction belonging to the region “Latin America &amp; Caribbean” according to the <a href="http://databank.worldbank.org/data/download/site-content/CLASS.xls">World Bank’s classification</a>(accessed on 20 July 2020) are included. The sample includes the following number of countries:</p>
 <pre><code>## [1] 42</code></pre>
 <p>In a next step, data on the prevalence of SEZs is added from the data annex of the 2019 <a href="https://unctad.org/Sections/dite_dir/docs/WIR2019/WIR19_tab21.xlsx">UNCTAD World Investment report</a>(accessed on June 16, 2020). The clean data can be found at “data_prepared/unctad_sez.csv”.</p>
 <p>A number of countries of the LAC region (mostly Carribean island states) are not included in the UNCTAD dataset or are presented as missing values. These are the following:</p>
-<pre><code>## [1] &quot;British Virgin Islands&quot;    &quot;Dominica&quot;                 
-## [3] &quot;Puerto Rico&quot;               &quot;Sint Maarten (Dutch part)&quot;
-## [5] &quot;St. Kitts and Nevis&quot;       &quot;St. Martin (French part)&quot; 
-## [7] &quot;Suriname&quot;                  &quot;Turks and Caicos Islands&quot; 
-## [9] &quot;Virgin Islands (U.S.)&quot;</code></pre>
+<pre><code>## [1] &quot;British Virgin Islands&quot;    &quot;Dominica&quot;                  &quot;Puerto Rico&quot;              
+## [4] &quot;Sint Maarten (Dutch part)&quot; &quot;St. Kitts and Nevis&quot;       &quot;St. Martin (French part)&quot; 
+## [7] &quot;Suriname&quot;                  &quot;Turks and Caicos Islands&quot;  &quot;Virgin Islands (U.S.)&quot;</code></pre>
 <p>For the purpose of this analysis, it is assumed that these countries do not have SEZs. The total number of SEZs in Latin America and the Caribbean is then:</p>
 <pre><code>## [1] 486</code></pre>
 <p>These are distributed across the following number of countries:</p>
@@ -1031,12 +1027,10 @@ CETICOS special economic zone
 <h2 number="3.4"><span class="header-section-number">3.4</span> How many LAC juridictions are part of the BEPS Inclusive Framework?</h2>
 <pre><code>## [1] 29</code></pre>
 <p>The following countries are not members:</p>
-<pre><code>##  [1] &quot;Bolivia&quot;                   &quot;Cuba&quot;                     
-##  [3] &quot;Ecuador&quot;                   &quot;El Salvador&quot;              
-##  [5] &quot;Guatemala&quot;                 &quot;Guyana&quot;                   
-##  [7] &quot;Nicaragua&quot;                 &quot;Puerto Rico&quot;              
-##  [9] &quot;Sint Maarten (Dutch part)&quot; &quot;St. Martin (French part)&quot; 
-## [11] &quot;Suriname&quot;                  &quot;Venezuela, RB&quot;            
+<pre><code>##  [1] &quot;Bolivia&quot;                   &quot;Cuba&quot;                      &quot;Ecuador&quot;                  
+##  [4] &quot;El Salvador&quot;               &quot;Guatemala&quot;                 &quot;Guyana&quot;                   
+##  [7] &quot;Nicaragua&quot;                 &quot;Puerto Rico&quot;               &quot;Sint Maarten (Dutch part)&quot;
+## [10] &quot;St. Martin (French part)&quot;  &quot;Suriname&quot;                  &quot;Venezuela, RB&quot;            
 ## [13] &quot;Virgin Islands (U.S.)&quot;</code></pre>
 </div>
 </div>

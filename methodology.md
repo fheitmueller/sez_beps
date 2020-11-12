@@ -23,12 +23,10 @@ The following R packages are used in this analysis:
 
 
 ```
-##   lubridate countrycode    magrittr  kableExtra       knitr      readxl 
-##     "1.7.9"     "1.2.0"       "1.5"     "1.2.1"      "1.30"     "1.3.1" 
-##     forcats     stringr       dplyr       purrr       readr       tidyr 
-##     "0.5.0"     "1.4.0"     "1.0.2"     "0.3.4"     "1.4.0"     "1.1.2" 
-##      tibble     ggplot2   tidyverse        here 
-##     "3.0.3"     "3.3.2"     "1.3.0"       "0.1"
+##   lubridate countrycode    magrittr  kableExtra       knitr      readxl     forcats     stringr 
+##     "1.7.9"     "1.2.0"       "1.5"     "1.2.1"      "1.30"     "1.3.1"     "0.5.0"     "1.4.0" 
+##       dplyr       purrr       readr       tidyr      tibble     ggplot2   tidyverse        here 
+##     "1.0.2"     "0.3.4"     "1.4.0"     "1.1.2"     "3.0.3"     "3.3.2"     "1.3.0"       "0.1"
 ```
 
 
@@ -44,11 +42,9 @@ In a next step, data on the prevalence of SEZs is added from the data annex of t
 A number of countries of the LAC region (mostly Carribean island states) are not included in the UNCTAD dataset or are presented as missing values. These are the following:
 
 ```
-## [1] "British Virgin Islands"    "Dominica"                 
-## [3] "Puerto Rico"               "Sint Maarten (Dutch part)"
-## [5] "St. Kitts and Nevis"       "St. Martin (French part)" 
-## [7] "Suriname"                  "Turks and Caicos Islands" 
-## [9] "Virgin Islands (U.S.)"
+## [1] "British Virgin Islands"    "Dominica"                  "Puerto Rico"              
+## [4] "Sint Maarten (Dutch part)" "St. Kitts and Nevis"       "St. Martin (French part)" 
+## [7] "Suriname"                  "Turks and Caicos Islands"  "Virgin Islands (U.S.)"
 ```
 
 For the purpose of this analysis, it is assumed that these countries do not have SEZs.
@@ -322,12 +318,10 @@ The following countries are not members:
 
 
 ```
-##  [1] "Bolivia"                   "Cuba"                     
-##  [3] "Ecuador"                   "El Salvador"              
-##  [5] "Guatemala"                 "Guyana"                   
-##  [7] "Nicaragua"                 "Puerto Rico"              
-##  [9] "Sint Maarten (Dutch part)" "St. Martin (French part)" 
-## [11] "Suriname"                  "Venezuela, RB"            
+##  [1] "Bolivia"                   "Cuba"                      "Ecuador"                  
+##  [4] "El Salvador"               "Guatemala"                 "Guyana"                   
+##  [7] "Nicaragua"                 "Puerto Rico"               "Sint Maarten (Dutch part)"
+## [10] "St. Martin (French part)"  "Suriname"                  "Venezuela, RB"            
 ## [13] "Virgin Islands (U.S.)"
 ```
 
