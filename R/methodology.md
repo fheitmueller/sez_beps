@@ -32,14 +32,14 @@ The following R packages are used in this analysis:
 ```
 
 
-In a first step, the geographical scope of the analysis is determined. Since the article deals principally with the Latin American region, all countries and jurisdiction belonging to the region "Latin America & Caribbean" according to the World Bank's classification are included. Countries and their regional classification are obtained from: <http://databank.worldbank.org/data/download/site-content/CLASS.xls> (accessed on 20 July 2020).The sample includes the following number of countries:
+In a first step, the geographical scope of the analysis is determined. Since the article deals principally with the Latin American region, all countries and jurisdiction belonging to the region "Latin America & Caribbean" according to the [World Bank's classification](http://databank.worldbank.org/data/download/site-content/CLASS.xls)(accessed on 20 July 2020) are included. The sample includes the following number of countries:
 
 
 ```
 ## [1] 42
 ```
 
-In a next step, data on the prevalence of SEZs is added from the UNCTAD World Investment report. The dataset was downloaded on June 16, 2020 from <https://unctad.org/Sections/dite_dir/docs/WIR2019/WIR19_tab21.xlsx>. For the data cleaning procedure, please consult the "data_preparation" document. The clean data can be found at "data_prepared/unctad_sez.csv".
+In a next step, data on the prevalence of SEZs is added from the data annex of the 2019 [UNCTAD World Investment report](https://unctad.org/Sections/dite_dir/docs/WIR2019/WIR19_tab21.xlsx)(accessed on June 16, 2020). The clean data can be found at "data_prepared/unctad_sez.csv".
 
 A number of countries of the LAC region (mostly Carribean island states) are not included in the UNCTAD dataset or are presented as missing values. These are the following:
 
@@ -64,13 +64,13 @@ These are distributed across the following number of countries:
 ```
 
 # Analysis of tax benefits
-The next step consists in adding data that is relevant to assess the kind of tax-benefit that the different SEZ regimes offer. For that purpose, both data on the "normal" tax regime applicable in the country to companies outside SEZs, as well as on the tax regime applicable in the SEZ is collected.  
+The next step consists in adding data that is relevant to assess the kind of tax-benefit that the different SEZ regimes offer. For that purpose, data on the "normal" tax regime applicable in the country to companies outside SEZs, as well as on the tax regime applicable in the SEZ is collected.  
 
 ## Data on "normal" tax regime
-Data on the "normal" tax regime in the rest of the country is downloaded from Centro Inter-Americano de Administración Tributaria (CIAT). CIAT provides time series data on "general" tax rates and and "maximum" tax rates. Since "general" excludes surcharges which are generally payable, the "maximum" rates are used. The difference of the SEZ regime from the rest of the country should therefore be regarded as the maximum benefit. Data was downloaded from the CIAT website: <https://ciatorg.sharepoint.com/sites/cds/_layouts/15/guestaccess.aspx?docid=0b55688f22c7f4f3c9af47402923b8128&authkey=AflZ26auh2fOQoTW5EHzhfI&e=356a6a32ce38454f94eba7398c54cfca> on 16 June 2020.   
-For jurisdictions where CIAT data was not available, data from KPMG was used. It was downloaded from <https://home.kpmg/xx/en/home/services/tax/tax-tools-and-resources/tax-rates-online/corporate-tax-rates-table.html> on 22 June 2020.  
+Data on the "normal" tax regime in the rest of the country is downloaded from [Centro Inter-Americano de Administración Tributaria (CIAT)](https://ciatorg.sharepoint.com/sites/cds/_layouts/15/guestaccess.aspx?docid=0b55688f22c7f4f3c9af47402923b8128&authkey=AflZ26auh2fOQoTW5EHzhfI&e=356a6a32ce38454f94eba7398c54cfca) on 16 June 2020. CIAT provides time series data on "general" tax rates and and "maximum" tax rates. Since "general" excludes surcharges which are generally payable, the "maximum" rates are used. The difference of the SEZ regime from the rest of the country should therefore be regarded as the maximum benefit.   
+For jurisdictions where CIAT data was not available, [data collected by  KPMG](https://home.kpmg/xx/en/home/services/tax/tax-tools-and-resources/tax-rates-online/corporate-tax-rates-table.html)(downloaded on 22 June 2020) was used. 
 Finally, tax rates for jurisdictions available in neither database were searched in the IBFD Country Tax Guides and on official websites of the country in question.
-Data was cleaned and country codes added (see separate document on data preparation).
+Data was cleaned subsequently (see separate document on data preparation).
 
 
 
@@ -81,22 +81,23 @@ In general, countries provide either for a full exemption, a fixed reduced rate 
 Consider two countries A and B. Both have tax benefits in SEZs. In year 1, the generally applicable tax rate in both countries is 20%. The SEZ benefit in country A is a fixed rate of 5%. The SEZ benefit in country B is a 75% reduction of the full tax rate, which is equivalent to 5%. In year 2, both countries increase their general tax rates to 30%. In country A, the tax rate in SEZs will still be 5%. However, in country B, it will have increased to 7.5% (a 75% reduction from 30%).  
 In addition to or instead of these three permanent kinds of benefits, some SEZs provide for a tax holiday (a full tax exemption for a limited time period). When a tax holiday is available, its duration is recorded in the database.   
 The main source used were IBFD Country Tax Guides. Where these did not yield a clear result, the domestic law was directly consulted. Refer to the file "data_created/sez_rates.csv" for links to the sources consulted and explanatory notes. In a few cases, the complexity of the tax regime had to be reduced for comparability reasons. In Haiti, for example, after an initial tax holiday of 15 years, the tax rate increases progressively to reach the full rate applicable in the rest of the country after six more years. Since this is difficult to capture and to compare with other countries, the data was coded as if the full rate applied directly after the expiry of the tax holiday.  
-The dataset includes a few tax incentives with regional scope that could rather be classified as "Disadvantaged area regimes", i.e. regions with a lower CIT rate than in the rest of the country usually because of a lower economic development than in the rest of the country. These areas were excluded for the remainder of the analysis, since such areas do not fulfill other defining criteria of SEZs (such as a strictly delimited territory, often by a fence and a different customs regime). Nevertheless, it mgiht be interesting to extent the dataset in the future by systematically including disadvantaged area regimes.  
-When a country abolished a regime but provides for a "grandfathering period" (a period of usually a few years in which already existing companies can continue to enjoy the tax benefit), the regime is counted as if it existed until the end of the grandfathering period.
+The dataset includes a few tax incentives with regional scope that could rather be classified as "Disadvantaged area regimes", i.e. regions with a lower CIT rate than in the rest of the country usually because of a lower economic development than in the rest of the country. These areas were excluded for the remainder of the analysis, since such areas do not fulfill other defining criteria of SEZs (such as a strictly delimited territory, often by a fence and a different customs regime). Nevertheless, it might be interesting to extent the dataset in the future by systematically including disadvantaged area regimes.  
+When a country abolished a regime but provides for a "grandfathering period" (a period of usually a few years in which already existing companies can continue to enjoy the tax benefit), the regime is counted as if it existed until the end of the grandfathering period.  
 The sectoral scope of the regime was generally not recorded. Whether an SEZ benefit can be combined with other tax benefits was not recorded either.  
 In the future, this dataset might also be updated to include more data years.
 For the purposes of this paper, the SEZ benefits available in different countries' SEZs were summarized in broader categories as displayed in the table below.  
 <table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>Table 1: Types of corporate tax benefits in SEZs in LAC</caption>
  <thead>
   <tr>
-   <th style="text-align:left;"> category </th>
-   <th style="text-align:left;"> data </th>
+   <th style="text-align:left;"> Category </th>
+   <th style="text-align:left;"> SEZ regime </th>
   </tr>
  </thead>
 <tbody>
   <tr>
    <td style="text-align:left;"> Full exemption or long tax holiday </td>
-   <td style="text-align:left;"> Antigua and Barbuda (Free trade and processing zone), Antigua and Barbuda (Special Economic Zone)         , Chile                                               , Costa Rica (Outside Great Metropolitan Area)        , Dominican Republic                                  , Honduras (Free zone)                                , Honduras (Export Processing Zone)                   , Haiti                                               , Nicaragua                                           , Panama (Colon Free Zone)                            , Panama (Free zones)                                 , Panama (City of Knowledge)                          , Panama (Panama Pacifico SEA)                        , Peru                                                , El Salvador                                         , Trinidad and Tobago                                 , Uruguay </td>
+   <td style="text-align:left;"> Antigua and Barbuda (all regimes)           , Chile                                       , Costa Rica (Outside Great Metropolitan Area), Dominican Republic                          , Honduras (all regimes)                      , Haiti                                       , Nicaragua                                   , Panama (all regimes)                        , Peru                                        , El Salvador                                 , Trinidad and Tobago                         , Uruguay </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Short tax holiday (10y or less) </td>
@@ -133,11 +134,11 @@ For the purposes of this paper, the SEZ benefits available in different countrie
 
 # Analysis of impact of BEPS Action 5 and Code of Conduct
 
-Data regarding the work of the Forum on Harmful Tax Practices (FHTP) was obtained from <http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf> and data of the EU Code of Conduct Group from the website of the European Council under <https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf>.
-The data is converted from pdf to csv following a prodcedure outlined in the data_preparation document.
+Data regarding the work of the Forum on Harmful Tax Practices (FHTP) was obtained from the JUly 2019 [Peer review report](http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf) and data of the EU Code of Conduct Group from the [website of the European Council](https://data.consilium.europa.eu/doc/document/ST-9639-2018-REV-4/en/pdf).
+The data is converted extracted from the pdf documents following a prodcedure outlined in the data_preparation document.
 
 ## Comparing data between both organizations
-The EU Code of Conduct Group document also reports about regimes that have been reviewed by the FHTP. One can therefore compare the documents to find out whether it is sufficient to use the EU document as data source. For this purpoose we check  whether the EU document lists all regimes that are listed in the OECD report.
+The EU Code of Conduct Group document also reports about regimes that have been reviewed by the FHTP. One can therefore compare the documents to find out whether it is sufficient to use the EU document as data source. For this purpose we check  whether the EU document lists all regimes that are listed in the OECD report.
 
 
 ```
@@ -148,10 +149,10 @@ The EU Code of Conduct Group document also reports about regimes that have been 
 ## [1] 309
 ```
 
-The EU only lists 64 regimes that were reviewed by the OECD FHTP report, whereas in the FHTP report lists 309 regimes in total. This means that both datasets need to be taken into account.  
+The EU Code of Conduct report only lists 64 regimes that were reviewed by the OECD FHTP report, whereas in the FHTP report lists 309 regimes in total. This means that both datasets need to be taken into account.  
 
 ## Selecting SEZ regimes
-Neither OECD nor EU reports classify directly which regimes are special economic zones, but the information is usually contained in the regime name. We filter the regimes by those which contain the a reference to a "zone", "centre", "city", "area" in them or which referred directly to Labuan, a Malaysian SEZ. Afterwards manual checks were conducted and some regimes excluded, mainly where "centre" did not refer to a, for example, financial centre but to a regime for a "centre" function of a firm, such as treasury. To filter the EU report, the word "centre" was not used initially (since too many errors were produced). However, some further regimes that based on their name and a quick check using google appeared to be SEZs were added.  
+Neither OECD nor EU reports classify directly which regimes are special economic zones, but the information is usually contained in the regime name. We filter the regimes by those which contain the a reference to a "zone", "centre", "city", "area" in them or which referred directly to Labuan, a Malaysian SEZ. Afterwards manual checks were conducted and some regimes excluded, mainly where "centre" did not refer to a, for example, financial centre but to a regime for a "centre" function of a firm, such as treasury. To filter the EU report, the word "centre" was not used initially (since too many errors were produced). However, some further regimes that based on their name and a quick check using google appeared to be SEZs were added. Some regimes that appeared to be disadvantaged area regimes were manually filtered out as well. 
 
 
 ```
@@ -187,142 +188,125 @@ On Antigua and Barbuda: <https://data.consilium.europa.eu/doc/document/ST-7416-2
 On Curacao: <https://data.consilium.europa.eu/doc/document/ST-7423-2020-INIT/en/pdf>   
 
 
-```
-## [1] 28
-```
-
 
 Aruba's Free Trade Zone regime is listed as "In process of being amended" by the FHTP, wereas the EU report lists the same regime as alredy amended. Since the EU report is more recent, we keep only the EU's assessment.  
-
+ !!!!Continue here!!!
 <table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>Table 3: LAC Countries with SEZs regimes assessed by FHTP and/or COCG</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Country </th>
-   <th style="text-align:left;"> harmful_SEZ_regimes </th>
-   <th style="text-align:left;"> COCG </th>
-   <th style="text-align:left;"> OECD_FHTP </th>
-   <th style="text-align:left;"> reaction </th>
+   <th style="text-align:left;"> SEZ regime identified as harmful </th>
+   <th style="text-align:left;"> By Forum on Harmful Tax Practices </th>
+   <th style="text-align:left;"> By Code of Conduct Group </th>
+   <th style="text-align:left;"> Amendment introduced </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Belize </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;"> Commercial free zone (CFZ) </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> not_amended </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Brazil </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;"> Export Processing Zone </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> not_amended </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Dominican Republic </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> Free trade zones </td>
-   <td style="text-align:left;"> not_amended </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Grenada </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;"> Export processing / commercial free zones enterprises </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> not_amended </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Jamaica </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;"> Special Economic Zones </td>
-   <td style="text-align:left;"> Special economic zones </td>
-   <td style="text-align:left;"> not_amended </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Panama </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;"> c("Free Zones Act", "Colon Free Zone") </td>
-   <td style="text-align:left;"> Colon free zone </td>
-   <td style="text-align:left;"> not_amended </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Paraguay </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> Free zone </td>
-   <td style="text-align:left;"> not_amended </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Peru </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;"> CETICOS special economic zone </td>
-   <td style="text-align:left;"> c("Special economic zone 1 (Ceticos / ZED)", "Special economic zone 2 (Zofratacna)") </td>
-   <td style="text-align:left;"> not_amended </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> Antigua &amp; Barbuda </td>
    <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;"> Free Trade Zones (Paradise Found Act, Yida Act, Free Trade Zone Act, Special Economic Zone Act) </td>
    <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> change_introduced </td>
+   <td style="text-align:left;"> Free Trade Zones (Paradise Found Act, Yida Act, Free Trade Zone Act, Special Economic Zone Act) </td>
+   <td style="text-align:left;"> Yes </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Aruba </td>
    <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;"> c("Free zones", "Special zone San Nicolas") </td>
    <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> change_introduced </td>
+   <td style="text-align:left;"> Free zones, Special zone San Nicolas </td>
+   <td style="text-align:left;"> Yes </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Belize </td>
    <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;"> Export processing zones (EPZ) enterprises </td>
    <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> change_introduced </td>
+   <td style="text-align:left;"> Export processing zones (EPZ) enterprises </td>
+   <td style="text-align:left;"> Yes </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Costa Rica </td>
    <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;"> Manufacturing activities under the amended Free Zones regime </td>
    <td style="text-align:left;"> Free trade zone </td>
-   <td style="text-align:left;"> change_introduced </td>
+   <td style="text-align:left;"> Manufacturing activities under the amended Free Zones regime </td>
+   <td style="text-align:left;"> Yes </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Curaçao </td>
    <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;"> Manufacturing activities under the eZone regime </td>
    <td style="text-align:left;"> E-Zone </td>
-   <td style="text-align:left;"> change_introduced </td>
+   <td style="text-align:left;"> Manufacturing activities under the eZone regime </td>
+   <td style="text-align:left;"> Yes </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Panama </td>
    <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> City of knowledge technical zone, Panama-Pacifico special economic zone </td>
    <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> c("City of knowledge technical zone", "Panama-Pacifico special economic zone") </td>
-   <td style="text-align:left;"> change_introduced </td>
+   <td style="text-align:left;"> Yes </td>
   </tr>
   <tr>
    <td style="text-align:left;"> St. Lucia </td>
    <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;"> Free trade Zones </td>
    <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> change_introduced </td>
+   <td style="text-align:left;"> Free trade Zones </td>
+   <td style="text-align:left;"> Yes </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Trinidad &amp; Tobago </td>
    <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;">  </td>
    <td style="text-align:left;"> Free trade zones </td>
-   <td style="text-align:left;"> in_process </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> In process </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Uruguay </td>
    <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> Free zones </td>
    <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> c("Free zones", "Free zones") </td>
-   <td style="text-align:left;"> change_introduced </td>
+   <td style="text-align:left;"> Yes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dominican Republic </td>
+   <td style="text-align:left;"> Under review </td>
+   <td style="text-align:left;"> Free trade zones </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Jamaica </td>
+   <td style="text-align:left;"> Under review </td>
+   <td style="text-align:left;"> Special economic zones </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Brazil </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Export Processing Zone </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Grenada </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Export processing / commercial free zones enterprises </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Paraguay </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> Free zone </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Peru </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> Special economic zone 1 (Ceticos / ZED), Special economic zone 2 (Zofratacna) </td>
+   <td style="text-align:left;"> CETICOS special economic zone </td>
+   <td style="text-align:left;">  </td>
   </tr>
 </tbody>
 </table>
