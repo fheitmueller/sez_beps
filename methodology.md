@@ -186,7 +186,6 @@ On Curacao: <https://data.consilium.europa.eu/doc/document/ST-7423-2020-INIT/en/
 
 
 Aruba's Free Trade Zone regime is listed as "In process of being amended" by the FHTP, wereas the EU report lists the same regime as alredy amended. Since the EU report is more recent, we keep only the EU's assessment.  
- !!!!Continue here!!!
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>Table 3: LAC Countries with SEZs regimes assessed by FHTP and/or COCG</caption>
  <thead>
