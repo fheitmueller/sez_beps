@@ -185,7 +185,7 @@ Sint Maarten;Tax exempt company;Under review;Regime under review by FHTP. Jurisd
 Antigua and Barbuda;International banking;Abolished;No grandfathering provided.;banking and insurance;ATG
 Australia;Offshore banking unit;In the process of being amended;Potentially harmful features will be addressed.;banking and insurance;AUS
 Barbados;Exempt insurance;Abolished;Grandfathering in accordance with FHTP timelines.;banking and insurance;BRB
-Barbados;Qualifying insurance companies;Abolished;No grandfathering provided.;banking and insurance;BRB
+Barbados;Qualifying insurance companies;Abolished;Grandfathering in accordance with FHTP timelines.;banking and insurance;BRB
 Barbados;Insurance regime;Not harmful;New regime, designed in compliance with FHTP standards.;banking and insurance;BRB
 Canada;International banking centres;Abolished;No grandfathering provided.;banking and insurance;CAN
 Cook Islands;International insurance companies;Under review;Regime under review by FHTP.;banking and insurance;COK
@@ -260,8 +260,8 @@ Uruguay;Free zones;Not harmful (amended);Ring-fencing removed. Substance require
 Uruguay;Shared service centre;Not harmful (amended);Ring-fencing removed. No grandfathering provided.;distribution and service;URY
 Viet Nam;Disadvantaged areas;Out of scope;No benefits for income from geographically mobile activities.;distribution and service;VNM
 Viet Nam;Economic zones;Out of scope;No benefits for income from geographically mobile activities.;distribution and service;VNM
-Viet Nam;Export processing zone;Out of scope;No benefits for income from activities.;distribution and service;VNM
-Viet Nam;Industrial parks/zones;Out of scope;No benefits for income from geographically mobile activities.;distribution and service;VNM
+Viet Nam;Export processing zone;Out of scope;No benefits for income from geographically mobile activities.;distribution and service;VNM
+Viet Nam;Industrial parks/zones;Out of scope;No benefits for income from;distribution and service;VNM
 Antigua and Barbuda;Tonnage tax1;Not harmful (amended);Ring-fencing removed. No grandfathering provided.;shipping;ATG
 Aruba;Shipping and aviation;Not harmful;No harmful features.;shipping;ABW
 Barbados;Shipping regime;Not harmful (amended);Ring-fencing removed. No grandfathering provided.;shipping;BRB
@@ -271,13 +271,11 @@ Liberia;Shipping regime;Not harmful;No harmful features.;shipping;LBR
 Lithuania;Tonnage tax regime;Not harmful;No harmful features.;shipping;LTU
 Malta;Tonnage tax system;Not harmful;No harmful features.;shipping;MLT
 Mauritius;Shipping regime;Not harmful;No harmful features.;shipping;MUS
-Panama;Shipping regime;Not harmful;No harmful features.;shipping;PAN
-Singapore;Maritime sector incentive;Not harmful;No harmful features.;shipping;SGP
 Andorra;Holding company regime;Not harmful (amended);Ring-fencing removed. Grandfathering in accordance with FHTP timelines.;holding;AND
 Barbados;International societies with restricted liability;Abolished;Grandfathering in accordance with FHTP timelines..;holding;BRB
 Barbados;International trusts1;Abolished;No grandfathering provided.;holding;BRB
 Saint Lucia;International trusts2;Abolished;Grandfathering in accordance with FHTP timelines.;holding;LCA
-Saint Vincent and the Grenadines;International trusts3;Abolished;Grandfathering in accordance with FHTP timelines.;holding;VCT
+Saint Vincent;International trusts3;Abolished;Grandfathering in accordance;holding;VCT
 Malaysia;Foreign fund management;Not harmful;No harmful features.;fund management;MYS
 Aruba;Imputation payment company;Potentially harmful but not actually harmful From  January 02: Abolished;Lack of substantial activities requirements, but no harmful economic effects in practice. Regime is subject to annual monitoring.;miscalleneous;ABW
 Aruba;Investment promotion;In the process of being amended;Potentially harmful features will be addressed.;miscalleneous;ABW

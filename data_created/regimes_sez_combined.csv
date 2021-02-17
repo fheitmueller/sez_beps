@@ -56,8 +56,8 @@ OECD;International trade zone;harmful;Benefits for income from geographically mo
 OECD;Free trade zones;harmful;Regime is being abolished.;TTO;OECD_FHTP;in_process;Latin America & Caribbean
 OECD;Free zones;harmful;Ring-fencing removed. Substance requirements (non- IP) in place. Grandfathering in accordance with FHTP timelines.;URY;OECD_FHTP;change_introduced;Latin America & Caribbean
 OECD;Economic zones;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP;not_amended;East Asia & Pacific
-OECD;Export processing zone;not_harmful;No benefits for income from activities.;VNM;OECD_FHTP;not_amended;East Asia & Pacific
-OECD;Industrial parks/zones;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP;not_amended;East Asia & Pacific
+OECD;Export processing zone;not_harmful;No benefits for income from geographically mobile activities.;VNM;OECD_FHTP;not_amended;East Asia & Pacific
+OECD;Industrial parks/zones;not_harmful;No benefits for income from;VNM;OECD_FHTP;not_amended;East Asia & Pacific
 OECD;International business centre;harmful;Benefits for income from geographically mobile activities removed. No grandfathering provided.;CPV;OECD_FHTP;change_introduced;Sub-Saharan Africa
 EU;Employment and (T) Zones;not_harmful;NA;BEL;COCG;not_amended;Europe & Central Asia
 EU;Enterprise Zones;not_harmful;NA;DNK;COCG;not_amended;Europe & Central Asia

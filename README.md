@@ -9,4 +9,4 @@ For description and output, consult methodology.html or methodology.md
 The data_preparation files contain information about how raw datasets were processed. It also describes how the sez_rates dataset was constructed.
 See R/data_preparation.Rmd or data_preparation.html for description + raw code
 
-The different data folders contain datasets used and produced in the project. Please consult the data preparation and methodology files regarding their origins, and how they are used in the project.
+The different data folders contain datasets used and produced in the project. Please consult the data preparation and methodology files regarding their sources, and how they are used in the project.
