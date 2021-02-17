@@ -110,11 +110,11 @@ saveRDS(kpmg_rates, here("data_prepared/kpmg_rates_clean.rds"))
 ```
 
 # BEPS Action 5 report
-All data with regards to preferential regimes is taken from <http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf>
+All data with regards to preferential regimes is taken from <http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf>, version of July 2019.
 
 ```{r file, echo=FALSE}
 #First, obtain this data from the relevant website and store link as variable
-file <- "http://www.oecd.org/tax/beps/harmful-tax-practices-peer-review-results-on-preferential-regimes.pdf"
+file <- here("data_raw/OECD_2019_Harmful Tax Practices – Peer Review Results.pdf")
 
 ```
 Next the pdf is parsed with the help of the R package "pdftools" and "tabulizer". For this purpose coordinates of the tables are manually selected and stored.
